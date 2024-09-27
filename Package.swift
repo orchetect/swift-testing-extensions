@@ -1,24 +1,41 @@
 // swift-tools-version: 6.0
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+import CompilerPluginSupport
 
 let package = Package(
-    name: "SwiftTestingUtils",
+    name: "swift-testing-extensions",
+    platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .macCatalyst(.v13)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "SwiftTestingUtils",
-            targets: ["SwiftTestingUtils"]),
+            name: "TestingExtensions",
+            targets: ["TestingExtensions"]
+        )
+    ],
+    dependencies: [
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.0-latest")
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "SwiftTestingUtils"),
-        .testTarget(
-            name: "SwiftTestingUtilsTests",
-            dependencies: ["SwiftTestingUtils"]
+            name: "TestingExtensions",
+            dependencies: ["TestingExtensionsMacros"],
+            resources: [.copy("TestResource/Base/.testResourceFolder")]
         ),
+        .macro(
+            name: "TestingExtensionsMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
+        .testTarget(
+            name: "TestingExtensionsTests",
+            dependencies: [
+                "TestingExtensions",
+                "TestingExtensionsMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
+            ],
+            resources: [.copy("TestResource/ResourceFiles")]
+        )
     ]
 )
