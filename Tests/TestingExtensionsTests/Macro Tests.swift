@@ -24,6 +24,8 @@ import Testing
 
 // MARK: - Macro Implementation Testing
 
+#if canImport(TestingExtensionsMacros)
+
 import XCTest
 import TestingExtensionsMacros
 
@@ -38,7 +40,6 @@ final class AssertTests: XCTestCase {
     ]
 
     func testFailMacroExpansion() {
-        #if canImport(TestingExtensionsMacros)
         assertMacroExpansion(
             """
             #fail
@@ -78,8 +79,7 @@ final class AssertTests: XCTestCase {
             """,
             macros: testMacros
         )
-        #else
-        throw XCTSkip("Macros unavailable for testing.")
-        #endif
     }
 }
+
+#endif
