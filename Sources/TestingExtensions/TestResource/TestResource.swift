@@ -14,11 +14,12 @@ import Testing
 /// 1. Create a base `TestResource` folder in your package's test target.
 /// 2. Create subfolder(s) within the `TestResource` folder as desired in your package's
 ///    testing target to contain the test resource files.
-///    For example, if a folder named "Add the following to your `Package.swift`:
+///
+///    For example, add the following to your `Package.swift`:
 ///    ```swift
 ///    .testTarget(
 ///        ...
-///        resources: [.copy("TestResource/SomeFolder")]
+///        resources: [.copy("TestResource/TextFiles")]
 ///    )
 ///    ```
 ///    > Important: DO NOT name any folders "Resources" otherwise Xcode may fail to build targets.
@@ -26,19 +27,46 @@ import Testing
 ///    test resource files available in the target.
 /// 4. For each file within any subfolder(s) located with the `TestResource` folder,
 ///    declare them individually as static properties.
-///    - For example, if a single subfolder named "TextFiles" contains two files `Foo.txt`
-///      and `Bar.csv` then these would be declared as follows:
+///    For example, if a single subfolder named "TextFiles" contains two files `Foo.txt`
+///    and `Bar.csv` then these would be declared as follows:
 ///
-///      ```swift
-///      extension TestResource {
-///          static let foo = TestResource.File(
-///              name: "Foo", ext: "txt", subFolder: "TextFiles"
-///          )
-///          static let bar = TestResource.File(
-///              name: "Bar", ext: "csv", subFolder: "TextFiles"
-///          )
-///      }
-///      ```
+///    ```swift
+///    extension TestResource {
+///        static let foo = TestResource.File(
+///            name: "Foo", ext: "txt", subFolder: "TextFiles"
+///        )
+///        static let bar = TestResource.File(
+///            name: "Bar", ext: "csv", subFolder: "TextFiles"
+///        )
+///    }
+///    ```
+///
+///    For complex testing environments it may be desirable to organize file declarations into
+///    sub-namespaces under the `TestResource` extension. In that case, simply nest them under actors:
+///
+///    Note that each subfolder referenced would require an individual `resources` declaration in
+///    your `Package.swift`.
+///
+///    ```swift
+///    extension TestResource {
+///        actor TextFiles {
+///            static let subFolder = "TextFiles"
+///
+///            static let foo = TestResource.File(
+///                name: "Foo", ext: "txt", subFolder: subFolder
+///            )
+///            // etc. ...
+///        }
+///        actor JSONFiles {
+///            static let subFolder = "JSONFiles"
+///
+///            static let bar = TestResource.File(
+///                name: "Bar", ext: "json", subFolder: subFolder
+///            )
+///            // etc. ...
+///        }
+///    }
+///    ```
 /// 5. To utilize these files in unit tests, access them as follows:
 ///    Getting a URL to a test resource file:
 ///    ```swift

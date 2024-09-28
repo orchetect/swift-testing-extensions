@@ -57,13 +57,15 @@ Recommended structure for using ``TestResource``:
 1. Create a base `TestResource` folder in your package's test target.
 2. Create subfolder(s) within the `TestResource` folder as desired in your package's
    testing target to contain the test resource files.
-   - For example, if a folder named "Add the following to your `Package.swift`:
-     ```swift
-     .testTarget(
-         // ...
-         resources: [.copy("TestResource/SomeFolder")]
-     )
-     ```
+   
+   For example, add the following to your `Package.swift`:
+   ```swift
+   .testTarget(
+       // ...
+       resources: [.copy("TestResource/TextFiles")]
+   )
+   ```
+   
    > Note:
    >
    > In some cases, naming any of these folders "Resources" may cause build errors.
@@ -83,6 +85,31 @@ Recommended structure for using ``TestResource``:
        static let bar = TestResource.File(
            name: "Bar", ext: "csv", subFolder: "TextFiles"
        )
+   }
+   ```
+   
+   For complex testing environments it may be desirable to organize file declarations into sub-namespaces under the `TestResource` extension. In that case, simply nest them under actors.
+   
+   Note that each subfolder referenced would require an individual `resources` declaration in your `Package.swift`.
+   
+   ```swift
+   extension TestResource {
+       actor TextFiles {
+           static let subFolder = "TextFiles"
+           
+           static let foo = TestResource.File(
+               name: "Foo", ext: "txt", subFolder: subFolder
+           )
+           // etc. ...
+       }
+       actor JSONFiles {
+           static let subFolder = "JSONFiles"
+           
+           static let bar = TestResource.File(
+               name: "Bar", ext: "json", subFolder: subFolder
+           )
+           // etc. ...
+       }
    }
    ```
 5. To utilize these files in unit tests, access them as follows:
