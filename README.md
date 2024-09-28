@@ -64,8 +64,9 @@ Recommended structure for using ``TestResource``:
          resources: [.copy("TestResource/SomeFolder")]
      )
      ```
-   > [!IMPORTANT]
-   > DO NOT name any folders "Resources" otherwise Xcode may fail to build targets.
+   > Note:
+   >
+   > In some cases, naming any of these folders "Resources" may cause build errors.
 3. In the `TestResource` folder, create a `TestResource.swift` file where you will declare
    test resource files available in the target.
 4. For each file within any subfolder(s) located with the `TestResource` folder,
