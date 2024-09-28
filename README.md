@@ -144,9 +144,9 @@ All methods have inline help explaining their purpose and basic usage examples.
 
 ## Roadmap
 
-Additional methods may be added over time on an as-needed basis.
+- Additional methods may be added over time on an as-needed basis.
 
-Since Swift Testing is multiplatform, additional platforms may be supported in future, including Linux and/or Windows.
+- Currently only Apple platforms are supported. However, since Swift Testing is a multiplatform package, additional platforms may be supported in future, including Linux and/or Windows.
 
 ## Author
 
