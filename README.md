@@ -72,8 +72,8 @@ Recommended structure for using ``TestResource``:
 4. For each file within any subfolder(s) located with the `TestResource` folder,
    declare them individually as static properties.
    
-   For example, if a single subfolder named "Text" contains two files `Foo.txt` and `Bar.csv`
-   then these would be declared as follows:
+   For example, if a single subfolder named "TextFiles" contains two files `Foo.txt`
+   and `Bar.csv` then these would be declared as follows:
    
    ```swift
    extension TestResource {
