@@ -12,6 +12,10 @@ import SwiftSyntaxMacros
 @main
 struct TestingExtensionsMacroPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
-        ModuleBundleMacro.self
+        // Generic
+        ModuleBundleMacro.self,
+        
+        // Swift Testing Extensions
+        FailMacro.self
     ]
 }

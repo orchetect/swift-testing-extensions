@@ -9,14 +9,14 @@ Useful Swift Testing extensions for test targets.
 Currently, the library provides a small but useful set of [Swift Testing](https://github.com/swiftlang/swift-testing) related extensions.
 
 - [Test Conditions](#Test-Conditions)
-  - [`fail()`](#fail)
+  - [`#fail`](#fail)
 - [Test Resources](#Test-Resources)
 
 ## Test Conditions
 
-### fail()
+### #fail
 
-The `fail()` condition is analogous to XCTest's `XCTFail()` method and can be used as a stand-in for its functionality.
+The `#fail` condition is analogous to XCTest's `XCTFail()` method and can be used as a stand-in for its functionality.
 
 This can be useful when standard Swift Testing conditions are not possible:
 
@@ -31,17 +31,19 @@ enum Foo {
     // test that variable `foo` is of the correct case,
     // and unwrap its associated value
     guard case let .bar(string) = foo else {
-        fail()
+        #fail
         return
     }
+    
+    #expect(string == "foo")
 }
 ```
 
 It can be used with or without a comment.
 
 ```swift
-fail()
-fail("Failure reason.")
+#fail
+#fail("Failure reason.")
 ```
 
 ## Test Resources
@@ -58,7 +60,7 @@ Recommended structure for using ``TestResource``:
    - For example, if a folder named "Add the following to your `Package.swift`:
      ```swift
      .testTarget(
-         ...
+         // ...
          resources: [.copy("TestResource/SomeFolder")]
      )
      ```

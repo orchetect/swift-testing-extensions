@@ -21,10 +21,14 @@ import Testing
 /// @Test func fooTest() async throws {
 ///     let foo = Foo.bar("foo")
 ///
+///     // test that variable `foo` is of the correct case,
+///     // and unwrap its associated value
 ///     guard case let .bar(string) = foo else {
-///         fail()
+///         #fail
 ///         return
 ///     }
+///
+///     #expect(string == "foo")
 /// }
 /// ```
 public func fail(
