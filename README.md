@@ -142,6 +142,18 @@ Most methods are implemented as category methods so they are generally discovera
 
 All methods have inline help explaining their purpose and basic usage examples.
 
+### Macro Trust
+
+This package emits custom [Swift macros](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/macros/).
+
+Xcode includes a security mechanism that requires allowing 3rd-party macros before they are allowed to be used.
+
+- When running in the Xcode IDE, a dialog will pop up asking to allow the macros.
+
+  This will happen only once per commit of the repo where the macros originate. This means whenever the macros change or are updated, Xcode invalidates the previous authorization and re-prompts to allow them.
+
+- When running CI unit tests using `xcodebuild test`, if the process errors out, the simplest solution currently is to add the `-skipMacroValidation` flag.
+
 ## Roadmap
 
 - Additional methods may be added over time on an as-needed basis.
