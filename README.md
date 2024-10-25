@@ -205,7 +205,7 @@ try TestResource.foo.manuallyDecompress(intoFolder: folder)
 
    ```swift
    dependencies: [
-       .package(url: "https://github.com/orchetect/swift-testing-extensions", from: "0.1.0")
+       .package(url: "https://github.com/orchetect/swift-testing-extensions", from: "0.2.0")
    ]
    ```
    
