@@ -97,11 +97,11 @@ extension TestResource.CompressedFile {
     ///
     /// > Tip:
     /// > This method is best run from a temporary test method within the same test target as the resource file.
-    /// > Ensure that the test method is deleted after running it.
+    /// > Ensure that the test method call is deleted after running it.
     ///
     /// > Important:
     /// > This method is a standalone manual utility and is not meant to be run as a part of automated testing.
-    /// > It is designed to be used one time to compress a resource file.
+    /// > It is designed to be used temporarily one time to compress a resource file.
     @available(
         *,
         deprecated,
@@ -122,12 +122,14 @@ extension TestResource.CompressedFile {
     ///
     /// > Tip:
     /// > This method is best run from a temporary test method within the same test target as the resource file.
-    /// > Ensure that the test method is deleted after running it.
+    /// > Ensure that the test method call is deleted after running it.
     ///
     /// > Important:
     /// > This method is a standalone manual utility and is not meant to be run as a part of automated testing.
     /// > It is designed to be used one time to decompress a resource file, usually for the purposes of editing
-    /// > the file in order to be recompressed again and replaced in the package at a later time..
+    /// > the file in order to be recompressed again and replaced in the package at a later time.
+    /// >
+    /// > For use in automated testing, call the `data()` method instead to return the uncompressed raw file content.
     @available(
         *,
         deprecated,

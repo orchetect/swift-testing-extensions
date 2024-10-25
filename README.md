@@ -11,6 +11,9 @@ Currently, the library provides a small but useful set of [Swift Testing](https:
 - [Test Conditions](#Test-Conditions)
   - [`#fail`](#fail)
 - [Test Resources](#Test-Resources)
+  - [File Resource](#File-Resource)
+  - [Compressed File Resource](#Compressed-File-Resource)
+
 
 ## Test Conditions
 
@@ -48,15 +51,13 @@ It can be used with or without a comment.
 
 ## Test Resources
 
-A simple global `TestResource` namespace and API is provided for accessing test resources in a test target.
-
-This namespace is its own global actor, so it is safe to access from any thread and any test context.
+A global `TestResource` namespace and members are provided for accessing test resources in a test target.
 
 Recommended structure for using ``TestResource``:
 
 1. Create a base `TestResource` folder in your package's test target.
 2. Create subfolder(s) within the `TestResource` folder as desired in your package's testing target to contain the test resource files.
-   
+
    For example, add the following to your `Package.swift`:
    ```swift
    .testTarget(
@@ -64,104 +65,115 @@ Recommended structure for using ``TestResource``:
        resources: [.copy("TestResource/TextFiles")]
    )
    ```
-   
+
    > Note:
    >
    > In some cases, naming any of these folders `"Resources"` may cause build errors.
 3. In the `TestResource` folder, create a `TestResource.swift` file where you will declare test resource files available in the target.
-4. For each file within any subfolder(s) located with the `TestResource` folder, declare them individually as static properties.
-   
-   For example, if a single subfolder named `"TextFiles"` contains two files `Foo.txt` and `Bar.csv` then these would be declared as follows:
-   
-   ```swift
-   extension TestResource {
-       static let foo = TestResource.File(
-           name: "Foo", ext: "txt", subFolder: "TextFiles"
-       )
-       static let bar = TestResource.File(
-           name: "Bar", ext: "csv", subFolder: "TextFiles"
-       )
-   }
-   ```
-   
-   For complex testing environments it may be desirable to organize file declarations into sub-namespaces under the `TestResource` extension. In that case, simply nest them under actors.
-   
-   Note that each subfolder referenced would require an individual `resources` declaration in your `Package.swift`.
-   
-   ```swift
-   extension TestResource {
-       actor TextFiles {
-           static let subFolder = "TextFiles"
-           
-           static let foo = TestResource.File(
-               name: "Foo", ext: "txt", subFolder: subFolder
-           )
-           // etc. ...
-       }
-       actor JSONFiles {
-           static let subFolder = "JSONFiles"
-           
-           static let bar = TestResource.File(
-               name: "Bar", ext: "json", subFolder: subFolder
-           )
-           // etc. ...
-       }
-   }
-   ```
-5. To utilize these files in unit tests, access them as follows:
-   
-   Getting a URL to a test resource file:
-   ```swift
-   let url = try #require(try TestResource.foo.url())
-   ```
-   
-   Directly reading a test resource file's contents:
-   ```swift
-   let data = try #require(try TestResource.foo.data())
-   ```
 
-### Compressed Test Resources
+### File Resource
 
-`TestResource` offers an optional feature to compress test resource files so that they occupy less storage space on disk.
+For each file within any subfolder(s) located with the `TestResource` folder, declare them individually as static properties.
 
-1. Follow steps 1 through 3 from the basic [Test Resources](#Test-Resources) to set up your package.
+For example, if a single subfolder named `"TextFiles"` contains two files `Foo.txt` and `Bar.csv` then these would be declared as follows:
 
-2. For each file within any subfolder(s) located with the `TestResource` folder that are to be treated as compressed files, declare them individually as static `CompressedFile` properties.
+```swift
+extension TestResource {
+    static let foo = TestResource.File(
+        name: "Foo", ext: "txt", subFolder: "TextFiles"
+    )
+    static let bar = TestResource.File(
+        name: "Bar", ext: "csv", subFolder: "TextFiles"
+    )
+}
+```
 
-   For example, if a single subfolder named `"TextFiles"` contains two compressed files `Foo.txt` and `Bar.csv` then these would be declared as follows:
+For complex testing environments it may be desirable to organize file declarations into sub-namespaces under the `TestResource` extension. In that case, simply nest them under actors.
 
-   ```swift
-   extension TestResource {
-       static let foo = TestResource.CompressedFile(
-           name: "Foo", ext: "txt", subFolder: "TextFiles", compression: .lzfse
-       )
-       static let bar = TestResource.CompressedFile(
-           name: "Bar", ext: "csv", subFolder: "TextFiles", compression: .lzfse
-       )
-   }
-   ```
+Note that each subfolder referenced would require an individual `resources` declaration in your `Package.swift`.
 
-3. Each file that is declared as `CompressedFile` must be compressed before adding to the repo.
+```swift
+extension TestResource {
+    enum TextFiles {
+        static let subFolder = "TextFiles"
+        
+        static let foo = TestResource.File(
+            name: "Foo", ext: "txt", subFolder: subFolder
+        )
+        // etc. ...
+    }
+    actor JSONFiles {
+        static let subFolder = "JSONFiles"
+        
+        static let bar = TestResource.File(
+            name: "Bar", ext: "json", subFolder: subFolder
+        )
+        // etc. ...
+    }
+}
+```
 
-   These files can be compressed manually by calling the following utility function:
+#### Use In Testing
 
-   ```swift
-   // ie: an uncompressed file named "Foo.txt" is located on the desktop
-   let folder = URL.desktopDirectory
-   try TestResource.foo.manuallyCompressFile(locatedIn: folder)
-   // outputs "Foo.txt.lzfse" file to the desktop, ready to move into the package
-   ```
+To utilize these files in automated unit tests, access them as follows:
 
-   Then the output file can be moved to the package within the test target's `/TestResource/X/` subfolder (where `X` is an appropriate subfolder to contain the file).
+Getting a URL to a test resource file:
+```swift
+let url = try #require(try TestResource.foo.url())
+```
 
-4. To utilize these files in unit tests, access them as follows:
+Directly reading a test resource file's contents:
+```swift
+let data = try #require(try TestResource.foo.data())
+```
 
-   Using a single method, the uncompressed file contents may be directly read:
+### Compressed File Resource
 
-   ```swift
-   // uncompresses the file's contents and returns it as Data
-   let data = try #require(try TestResource.foo.data())
-   ```
+`TestResource` offers an optional feature to compress test resource files so that they occupy less storage space in the repository. For some file types this can result in dramatic space savings.
+
+For each file within any subfolder(s) located with the `TestResource` folder that are to be treated as compressed files, declare them individually as static `CompressedFile` properties.
+
+For example, if a single subfolder named `"TextFiles"` contains two compressed files `Foo.txt.lzfse` and `Bar.csv.lzfse` then these would be declared as follows:
+
+```swift
+extension TestResource {
+    static let foo = TestResource.CompressedFile(
+        name: "Foo", ext: "txt", subFolder: "TextFiles", compression: .lzfse
+    )
+    static let bar = TestResource.CompressedFile(
+        name: "Bar", ext: "csv", subFolder: "TextFiles", compression: .lzfse
+    )
+}
+```
+
+Each file that is declared as `CompressedFile` must be compressed before adding to the repo.
+
+These files can be compressed manually by running a temporary unit test case containing the following utility function:
+
+```swift
+@Test func temporaryFileCompressionUtility() throws {
+    // ie: an uncompressed file named "Foo.txt" is located on the desktop
+    let folder = URL.desktopDirectory
+    try TestResource.foo.manuallyCompressFile(locatedIn: folder)
+    // outputs "Foo.txt.lzfse" file to the desktop, ready to move into the package
+}
+```
+
+The output file can then be moved into the package within the test target's `/TestResource/X/` subfolder (where `X` is an appropriate subfolder to contain the file).
+
+> [!IMPORTANT]
+> Ensure that this method is commented out or deleted after you are finished using it so that this operation is not called as part of your automated unit testing.
+
+#### Use In Testing
+
+To utilize these files in automated unit tests, the uncompressed file contents may be read directly with a single method call:
+
+```swift
+// uncompresses the file's contents and returns it as Data
+let data = try #require(try TestResource.foo.data())
+```
+
+#### Manually Decompress Test Resource For Editing
 
 At any time, a compressed resource file can be decompressed manually and written to an uncompressed file:
 
@@ -171,19 +183,17 @@ try TestResource.foo.manuallyDecompress(intoFolder: folder)
 // outputs "Foo.txt" file to the desktop
 ```
 
-Note that this method is not meant to be run as part of automated unit testing, but more as a utility when the file requires editing in order to be recompressed again and replaced in the package at a later time.
+> [!IMPORTANT]
+> Note that this method is not meant to be run as part of automated unit testing, but is provided as a utility when the file requires editing in order to be recompressed again and replaced in the package at a later time. For use in automated testing, call the `data()` method instead to return the uncompressed raw file content.
 
 ## Installation: Swift Package Manager (SPM)
 
 ### Dependency within an Application
 
 1. Add the package to your Xcode project's test target(s) using Swift Package Manager
-
    - Select File → Swift Packages → Add Package Dependency
    - Add package using `https://github.com/orchetect/swift-testing-extensions` as the URL.
-
 2. Import the module in your `*.swift` test files where needed.
-
    ```swift
    import Testing
    import TestingExtensions
