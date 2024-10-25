@@ -11,7 +11,6 @@ import SwiftSyntaxMacrosTestSupport
 
 import Testing
 @testable import TestingExtensions
-@testable import TestingExtensionsMacros
 
 @Test func failMacro() async throws {
     withKnownIssue {
@@ -28,7 +27,7 @@ import Testing
 #if canImport(TestingExtensionsMacros)
 
 import XCTest
-import TestingExtensionsMacros
+@testable import TestingExtensionsMacros
 
 /// > Note:
 /// > - At the time this code was written, `assertMacroExpansion` only asserts
