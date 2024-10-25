@@ -112,7 +112,7 @@ extension TestResource {
                     subdirectory: self.subFolder
                 ),
                 "Test resource file not found or is not accessible.",
-                sourceLocation: #_sourceLocation
+                sourceLocation: sourceLocation
             )
         }
         
