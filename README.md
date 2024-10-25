@@ -55,8 +55,7 @@ This namespace is its own global actor, so it is safe to access from any thread 
 Recommended structure for using ``TestResource``:
 
 1. Create a base `TestResource` folder in your package's test target.
-2. Create subfolder(s) within the `TestResource` folder as desired in your package's
-   testing target to contain the test resource files.
+2. Create subfolder(s) within the `TestResource` folder as desired in your package's testing target to contain the test resource files.
    
    For example, add the following to your `Package.swift`:
    ```swift
@@ -68,14 +67,11 @@ Recommended structure for using ``TestResource``:
    
    > Note:
    >
-   > In some cases, naming any of these folders "Resources" may cause build errors.
-3. In the `TestResource` folder, create a `TestResource.swift` file where you will declare
-   test resource files available in the target.
-4. For each file within any subfolder(s) located with the `TestResource` folder,
-   declare them individually as static properties.
+   > In some cases, naming any of these folders `"Resources"` may cause build errors.
+3. In the `TestResource` folder, create a `TestResource.swift` file where you will declare test resource files available in the target.
+4. For each file within any subfolder(s) located with the `TestResource` folder, declare them individually as static properties.
    
-   For example, if a single subfolder named "TextFiles" contains two files `Foo.txt`
-   and `Bar.csv` then these would be declared as follows:
+   For example, if a single subfolder named `"TextFiles"` contains two files `Foo.txt` and `Bar.csv` then these would be declared as follows:
    
    ```swift
    extension TestResource {
@@ -123,6 +119,59 @@ Recommended structure for using ``TestResource``:
    ```swift
    let data = try #require(try TestResource.foo.data())
    ```
+
+### Compressed Test Resources
+
+`TestResource` offers an optional feature to compress test resource files so that they occupy less storage space on disk.
+
+1. Follow steps 1 through 3 from the basic [Test Resources](#Test-Resources) to set up your package.
+
+2. For each file within any subfolder(s) located with the `TestResource` folder that are to be treated as compressed files, declare them individually as static `CompressedFile` properties.
+
+   For example, if a single subfolder named `"TextFiles"` contains two compressed files `Foo.txt` and `Bar.csv` then these would be declared as follows:
+
+   ```swift
+   extension TestResource {
+       static let foo = TestResource.CompressedFile(
+           name: "Foo", ext: "txt", subFolder: "TextFiles", compression: .lzfse
+       )
+       static let bar = TestResource.CompressedFile(
+           name: "Bar", ext: "csv", subFolder: "TextFiles", compression: .lzfse
+       )
+   }
+   ```
+
+3. Each file that is declared as `CompressedFile` must be compressed before adding to the repo.
+
+   These files can be compressed manually by calling the following utility function:
+
+   ```swift
+   // ie: an uncompressed file named "Foo.txt" is located on the desktop
+   let folder = URL.desktopDirectory
+   try TestResource.foo.manuallyCompressFile(locatedIn: folder)
+   // outputs "Foo.txt.lzfse" file to the desktop, ready to move into the package
+   ```
+
+   Then the output file can be moved to the package within the test target's `/TestResource/X/` subfolder (where `X` is an appropriate subfolder to contain the file).
+
+4. To utilize these files in unit tests, access them as follows:
+
+   Using a single method, the uncompressed file contents may be directly read:
+
+   ```swift
+   // uncompresses the file's contents and returns it as Data
+   let data = try #require(try TestResource.foo.data())
+   ```
+
+At any time, a compressed resource file can be decompressed manually and written to an uncompressed file:
+
+```swift
+let folder = URL.desktopDirectory
+try TestResource.foo.manuallyDecompress(intoFolder: folder)
+// outputs "Foo.txt" file to the desktop
+```
+
+Note that this method is not meant to be run as part of automated unit testing, but more as a utility when the file requires editing in order to be recompressed again and replaced in the package at a later time.
 
 ## Installation: Swift Package Manager (SPM)
 
