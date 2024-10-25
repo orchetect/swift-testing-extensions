@@ -10,7 +10,8 @@ import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 
 import Testing
-/* @testable */ import TestingExtensions
+@testable import TestingExtensions
+@testable import TestingExtensionsMacros
 
 @Test func failMacro() async throws {
     withKnownIssue {
@@ -36,16 +37,17 @@ import TestingExtensionsMacros
 /// >   this can be refactored to use it.
 final class AssertTests: XCTestCase {
     let testMacros: [String: Macro.Type] = [
-        "fail": FailMacro.self
+        "fail": FailMacro.self,
+        "alternativeFail": AlternativeFailMacro.self
     ]
-
+    
     func testFailMacroExpansion() {
         assertMacroExpansion(
             """
             #fail
             """,
             expandedSource: """
-            #expect(Bool(false))
+            _ = Issue.record()
             """,
             macros: testMacros
         )
@@ -55,7 +57,7 @@ final class AssertTests: XCTestCase {
             #fail("Failure reason.")
             """,
             expandedSource: """
-            #expect(Bool(false), "Failure reason.")
+            _ = Issue.record("Failure reason.")
             """,
             macros: testMacros
         )
@@ -65,7 +67,7 @@ final class AssertTests: XCTestCase {
             #fail("Failure reason.", sourceLocation: SourceLocation(fileID: "id", filePath: "path", line: 20, column: 4))
             """,
             expandedSource: """
-            #expect(Bool(false), "Failure reason.", sourceLocation: SourceLocation(fileID: "id", filePath: "path", line: 20, column: 4))
+            _ = Issue.record("Failure reason.", sourceLocation: SourceLocation(fileID: "id", filePath: "path", line: 20, column: 4))
             """,
             macros: testMacros
         )
@@ -75,9 +77,51 @@ final class AssertTests: XCTestCase {
             #fail(sourceLocation: SourceLocation())
             """,
             expandedSource: """
-            #expect(Bool(false), sourceLocation: SourceLocation())
+            _ = Issue.record(sourceLocation: SourceLocation())
             """,
             macros: testMacros
+        )
+    }
+
+    func testAlternativeFailMacroExpansion() {
+        assertMacroExpansion(
+             """
+             #alternativeFail
+             """,
+             expandedSource: """
+             #expect(Bool(false))
+             """,
+             macros: testMacros
+        )
+        
+        assertMacroExpansion(
+             """
+             #alternativeFail("Failure reason.")
+             """,
+             expandedSource: """
+             #expect(Bool(false), "Failure reason.")
+             """,
+             macros: testMacros
+        )
+        
+        assertMacroExpansion(
+             """
+             #alternativeFail("Failure reason.", sourceLocation: SourceLocation(fileID: "id", filePath: "path", line: 20, column: 4))
+             """,
+             expandedSource: """
+             #expect(Bool(false), "Failure reason.", sourceLocation: SourceLocation(fileID: "id", filePath: "path", line: 20, column: 4))
+             """,
+             macros: testMacros
+        )
+        
+        assertMacroExpansion(
+             """
+             #alternativeFail(sourceLocation: SourceLocation())
+             """,
+             expandedSource: """
+             #expect(Bool(false), sourceLocation: SourceLocation())
+             """,
+             macros: testMacros
         )
     }
 }
