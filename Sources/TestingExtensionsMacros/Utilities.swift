@@ -1,8 +1,7 @@
 //
 //  Utilities.swift
-//  swift-testing-extensions
-//
-//  Created by Steffan Andrews on 2024-09-27.
+//  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftCompilerPlugin
