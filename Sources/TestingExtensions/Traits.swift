@@ -41,12 +41,50 @@ extension Trait where Self == Testing.ConditionTrait {
     /// Test case usage:
     ///
     /// ```swift
-    /// @Test(.enabledIfShiftOnlyIsDown) func foo async throws {
+    /// @Test(.enabledIfShiftOnlyIsDown) func foo() async throws {
     ///     // test logic...
     /// }
     /// ```
     public static var enabledIfShiftOnlyIsDown: ConditionTrait {
         .enabled(if: isShiftOnlyDown())
+    }
+}
+
+// MARK: - System Timing Precision
+
+/// Returns `true` if system conditions are suitable for executing tests that rely on precise system timing.
+public func isSystemTimingStable(
+    duration: TimeInterval = 0.1,
+    tolerance: TimeInterval = 0.01
+) -> Bool {
+    let durationMS = UInt32(duration * TimeInterval(USEC_PER_SEC))
+    
+    let start = Date()
+    usleep(durationMS)
+    let end = Date()
+    let diff = end.timeIntervalSince(start)
+    
+    let range = (duration - tolerance) ... (duration + tolerance)
+    return range.contains(diff)
+}
+
+extension Trait where Self == Testing.ConditionTrait {
+    /// Convenience proxy for `.enabled(if: isSystemTimingStable())`.
+    ///
+    /// Returns `true` if system conditions are suitable for executing tests that rely on precise system timing.
+    ///
+    /// Test case usage:
+    ///
+    /// ```swift
+    /// @Test(.enabledIfSystemTimingStable()) func foo() async throws {
+    ///     // test logic...
+    /// }
+    /// ```
+    public static func enabledIfSystemTimingStable(
+        duration: TimeInterval = 0.1,
+        tolerance: TimeInterval = 0.01
+    ) -> ConditionTrait {
+        .enabled(if: isSystemTimingStable(duration: duration, tolerance: tolerance))
     }
 }
 
