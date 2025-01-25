@@ -53,6 +53,14 @@ extension Trait where Self == Testing.ConditionTrait {
 // MARK: - System Timing Precision
 
 /// Returns `true` if system conditions are suitable for executing tests that rely on precise system timing.
+///
+/// Test case usage:
+///
+/// ```swift
+/// @Test(.enabledIfSystemTimingStable()) func foo() async throws {
+///     // test logic...
+/// }
+/// ```
 public func isSystemTimingStable(
     duration: TimeInterval = 0.1,
     tolerance: TimeInterval = 0.01
