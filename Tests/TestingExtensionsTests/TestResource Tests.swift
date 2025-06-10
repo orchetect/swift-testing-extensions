@@ -20,24 +20,24 @@ extension TestResource {
 
 @available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) // URL path() requirement
 @Test func testResourceURL() async throws {
-    let url = try #require(try TestResource.foo.url())
+    let url = try TestResource.foo.url()
     #expect(FileManager.default.fileExists(atPath: url.path()))
 }
 
 @Test func testResourceData() async throws {
-    let data = try #require(try TestResource.foo.data())
+    let data = try TestResource.foo.data()
     let string = try #require(String(data: data, encoding: .utf8))
     #expect(string == "Foo file content")
 }
 
 @available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) // URL path() requirement
 @Test func compressedTestResourceURL() async throws {
-    let url = try #require(try TestResource.bar.url())
+    let url = try TestResource.bar.url()
     #expect(FileManager.default.fileExists(atPath: url.path()))
 }
 
 @Test func compressedTestResourceData() async throws {
-    let data = try #require(try TestResource.bar.data())
+    let data = try TestResource.bar.data()
     let string = try #require(String(data: data, encoding: .utf8))
     #expect(string == "Bar file content")
 }
