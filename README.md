@@ -256,7 +256,13 @@ Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/swift
 
 This package has no affiliation with the [Swift Testing](https://github.com/swiftlang/swift-testing) project but is offered as-is for use in conjunction with it.
 
+## Community & Support
+
+Please do not email maintainers for technical support. Several options are available for issues and questions:
+
+- Questions and feature ideas can be posted to [Discussions](https://github.com/orchetect/swift-testing-extensions/discussions).
+- If an issue is a verifiable bug with reproducible steps it may be posted in [Issues](https://github.com/orchetect/swift-testing-extensions/issues).
+
 ## Contributions
 
-Bug fixes and improvements are welcome. Please open an issue to discuss prior to submitting PRs.
-
+Contributions are welcome. Posting in [Discussions](https://github.com/orchetect/swift-testing-extensions/discussions) first prior to new submitting PRs for features or modifications is encouraged.
