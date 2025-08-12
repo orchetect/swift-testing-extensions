@@ -9,7 +9,7 @@
 import Testing
 
 /// Wait for a boolean condition, failing an expectation if the condition times out without evaluating to `true`.
-func wait(
+public func wait(
     expect condition: @Sendable () async throws -> Bool,
     timeout: TimeInterval,
     pollingInterval: TimeInterval = 0.1,
@@ -29,7 +29,7 @@ func wait(
 }
 
 /// Wait for a boolean condition, throwing an error if the condition times out without evaluating to `true`.
-func wait(
+public func wait(
     require condition: @Sendable () async throws -> Bool,
     timeout: TimeInterval,
     pollingInterval: TimeInterval = 0.1,
@@ -63,6 +63,5 @@ extension Task where Success == Never, Failure == Never {
         try await sleep(nanoseconds: intervalNS)
     }
 }
-
 
 #endif
