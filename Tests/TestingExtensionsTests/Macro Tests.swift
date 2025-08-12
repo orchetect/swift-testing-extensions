@@ -14,7 +14,8 @@ import Testing
 
 @Test func failMacro() async throws {
     withKnownIssue {
-        #fail
+        // #fail // this does not compile in Xcode 26 beta
+        #fail() // this is required in Xcode 26 beta, unless it's a bug and gets resolved later?
     }
     
     withKnownIssue {
