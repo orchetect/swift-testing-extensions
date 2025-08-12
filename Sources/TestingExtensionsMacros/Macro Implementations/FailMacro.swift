@@ -1,33 +1,16 @@
 //
-//  Macro Implementations.swift
+//  FailMacro.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
+
+#if canImport(Testing)
 
 import SwiftCompilerPlugin
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-// MARK: - Generic
-
-/// Returns the module bundle (`Module.bundle`) for the current scope.
-/// Call using the `#moduleBundle` macro.
-///
-/// Implementing this as a Swift macro allows us to have methods in an external module
-/// reference the calling module's bundle.
-public struct ModuleBundleMacro: ExpressionMacro {
-    public static func expansion(
-        of node: some FreestandingMacroExpansionSyntax,
-        in context: some MacroExpansionContext
-    ) -> ExprSyntax {
-        "Bundle.module"
-    }
-}
-
-// MARK: - Swift Testing Extensions
-
-#if canImport(Testing)
 import Testing
 
 /// The `#fail` condition is an extension of Swift Testing and is analogous to XCTest's `XCTFail()`
@@ -134,6 +117,6 @@ struct AlternativeFailMacro: ExpressionMacro {
         
         return ExprSyntax(stringLiteral: output)
     }
- }
+}
 
 #endif
