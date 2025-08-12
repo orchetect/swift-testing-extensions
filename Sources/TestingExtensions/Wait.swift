@@ -16,6 +16,9 @@ public func wait(
     _ comment: Testing.Comment? = nil,
     sourceLocation: Testing.SourceLocation = #_sourceLocation
 ) async rethrows {
+    let timeout = max(timeout, 0.001) // sanitize: clamp
+    let pollingInterval = max(pollingInterval, 0.001) // sanitize: clamp
+    
     let pollingIntervalNS = UInt64(pollingInterval * TimeInterval(NSEC_PER_SEC))
     
     let startTime = Date()
@@ -36,6 +39,9 @@ public func wait(
     _ comment: Testing.Comment? = nil,
     sourceLocation: Testing.SourceLocation = #_sourceLocation
 ) async throws {
+    let timeout = max(timeout, 0.001) // sanitize: clamp
+    let pollingInterval = max(pollingInterval, 0.001) // sanitize: clamp
+    
     let pollingIntervalNS = UInt64(pollingInterval * TimeInterval(NSEC_PER_SEC))
     
     let startTime = Date()
