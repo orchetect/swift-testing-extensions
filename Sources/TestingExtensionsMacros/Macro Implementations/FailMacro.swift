@@ -13,7 +13,7 @@ import SwiftSyntaxMacros
 
 import Testing
 
-/// The `#fail` condition is an extension of Swift Testing and is analogous to XCTest's `XCTFail()`
+/// The `#fail()` condition is an extension of Swift Testing and is analogous to XCTest's `XCTFail()`
 /// method and can be used as a stand-in for its functionality.
 ///
 /// This can be useful when standard Swift Testing conditions are not possible.
@@ -29,7 +29,7 @@ import Testing
 ///     // test that variable `foo` is of the correct case,
 ///     // and unwrap its associated value
 ///     guard case let .bar(string) = foo else {
-///         #fail
+///         #fail()
 ///         return
 ///     }
 ///
