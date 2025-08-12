@@ -10,6 +10,7 @@ Currently, the library provides a small but useful set of [Swift Testing](https:
 
 - [Test Conditions](#Test-Conditions)
   - [`#fail`](#fail)
+  - [`wait(expect:)` and `wait(require:)`](#wait_expect_-and-wait_require_)
 - [Test Resources](#Test-Resources)
   - [File Resource](#File-Resource)
   - [Compressed File Resource](#Compressed-File-Resource)
@@ -17,7 +18,7 @@ Currently, the library provides a small but useful set of [Swift Testing](https:
 
 ## Test Conditions
 
-### #fail
+### `#fail`
 
 The `#fail` condition is analogous to XCTest's `XCTFail()` method and can be used as a stand-in for its functionality.
 
@@ -26,6 +27,7 @@ This can be useful when standard Swift Testing conditions are not possible:
 ```swift
 enum Foo {
     case bar(String)
+    case baz
 }
 
 @Test func fooTest() async throws {
@@ -34,7 +36,7 @@ enum Foo {
     // test that variable `foo` is of the correct case,
     // and unwrap its associated value
     guard case let .bar(string) = foo else {
-        #fail
+        #fail()
         return
     }
     
@@ -47,6 +49,34 @@ It can be used with or without a comment.
 ```swift
 #fail()
 #fail("Failure reason.")
+```
+
+### `wait(expect:)` and `wait(require:)`
+
+The `wait(expect:)` condition repeatedly polls the condition expression until it evaluates `true` with a specified timeout.
+
+This is useful in scenarios where Swift Testing's built-in `confirmation` API is not flexible enough.
+
+```swift
+@Test func fooTest() async throws {
+    // perform some async work here
+    
+    await wait(expect: { await foo == 1 }, timeout: 2.0)
+}
+```
+
+The `wait(require:)` functions identically to `wait(expect:)` but is a throwing method similar to `#require`.
+
+This is useful in scenarios where Swift Testing's built-in `confirmation` API is not flexible enough.
+
+```swift
+@Test func fooTest() async throws {
+    // perform some async work here
+    
+    try await wait(expect: { await foo == 1 }, timeout: 2.0)
+    
+    // continues test only if foo is 1 before the timeout expires...
+}
 ```
 
 ## Test Resources
