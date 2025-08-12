@@ -21,7 +21,7 @@ extension TestResource {
 @available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) // URL path() requirement
 @Test func testResourceURL() async throws {
     let url = try TestResource.foo.url()
-    #expect(FileManager.default.fileExists(atPath: url.path()))
+    #expect(FileManager.default.fileExists(atPath: url.path(percentEncoded: false)))
 }
 
 @Test func testResourceData() async throws {
@@ -33,7 +33,7 @@ extension TestResource {
 @available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) // URL path() requirement
 @Test func compressedTestResourceURL() async throws {
     let url = try TestResource.bar.url()
-    #expect(FileManager.default.fileExists(atPath: url.path()))
+    #expect(FileManager.default.fileExists(atPath: url.path(percentEncoded: false)))
 }
 
 @Test func compressedTestResourceData() async throws {
