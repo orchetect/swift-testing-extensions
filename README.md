@@ -45,7 +45,7 @@ enum Foo {
 It can be used with or without a comment.
 
 ```swift
-#fail
+#fail()
 #fail("Failure reason.")
 ```
 
