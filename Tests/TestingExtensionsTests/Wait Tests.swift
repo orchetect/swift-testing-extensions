@@ -21,7 +21,7 @@ import TestingExtensions
         let foo = Foo()
         
         Task {
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
             await foo.update(value: 1)
         }
         
@@ -43,7 +43,7 @@ import TestingExtensions
         let foo = Foo()
         
         Task {
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
             await foo.update(value: 1)
         }
         
@@ -64,7 +64,7 @@ import TestingExtensions
         let foo = Foo()
         
         Task {
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
             await foo.update(value: 1)
         }
         
@@ -86,7 +86,7 @@ import TestingExtensions
         let foo = Foo()
         
         Task {
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
             await foo.update(value: 1)
         }
         
@@ -107,7 +107,7 @@ import TestingExtensions
         let foo = Foo()
         
         Task {
-            try await Task.sleep(for: .seconds(isStable ? 1.0 : 5.0))
+            try await Task.sleep(seconds: isStable ? 1.0 : 5.0)
             await foo.update(value: 1)
         }
         
@@ -130,7 +130,7 @@ import TestingExtensions
         let foo = Foo()
         
         Task {
-            try await Task.sleep(for: .seconds(isStable ? 1.0 : 5.0))
+            try await Task.sleep(seconds: isStable ? 1.0 : 5.0)
             await foo.update(value: 1)
         }
         
