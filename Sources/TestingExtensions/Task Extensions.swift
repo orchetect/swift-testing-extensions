@@ -16,7 +16,7 @@ extension Task where Success == Never, Failure == Never {
     ///
     /// This function doesn't block the underlying thread.
     @_disfavoredOverload
-    static func sleep(seconds: TimeInterval) async throws {
+    package static func sleep(seconds: TimeInterval) async throws {
         let intervalNS = UInt64(seconds * TimeInterval(NSEC_PER_SEC))
         try await sleep(nanoseconds: intervalNS)
     }
