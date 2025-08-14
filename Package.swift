@@ -33,7 +33,9 @@ let package = Package(
             dependencies: [
                 "TestingExtensions",
                 "TestingExtensionsMacros",
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"), // Xcode 26 won't compile test target without this
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax") // Xcode 26 won't compile test target without this
             ],
             resources: [.copy("TestResource/ResourceFiles")]
         )
