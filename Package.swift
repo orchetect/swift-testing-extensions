@@ -5,7 +5,7 @@ import CompilerPluginSupport
 
 let package = Package(
     name: "swift-testing-extensions",
-    platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .macCatalyst(.v13)],
+    platforms: [.macOS(.v10_15), .macCatalyst(.v13), .iOS(.v13), .tvOS(.v13), .watchOS(.v6)],
     products: [
         .library(
             name: "TestingExtensions",
@@ -24,8 +24,9 @@ let package = Package(
         .macro(
             name: "TestingExtensionsMacros",
             dependencies: [
-                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax")
             ]
         ),
         .testTarget(
@@ -33,9 +34,8 @@ let package = Package(
             dependencies: [
                 "TestingExtensions",
                 "TestingExtensionsMacros",
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"), // Xcode 26 won't compile test target without this
-                .product(name: "SwiftCompilerPlugin", package: "swift-syntax") // Xcode 26 won't compile test target without this
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
             ],
             resources: [.copy("TestResource/ResourceFiles")]
         )

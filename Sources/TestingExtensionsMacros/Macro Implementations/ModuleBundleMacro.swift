@@ -4,9 +4,7 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-import SwiftCompilerPlugin
 import SwiftSyntax
-import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 /// Returns the module bundle (`Module.bundle`) for the current scope.

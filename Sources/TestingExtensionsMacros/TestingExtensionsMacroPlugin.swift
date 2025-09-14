@@ -4,9 +4,9 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if canImport(SwiftCompilerPlugin)
+
 import SwiftCompilerPlugin
-import SwiftSyntax
-import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 @main
@@ -19,3 +19,5 @@ struct TestingExtensionsMacroPlugin: CompilerPlugin {
         FailMacro.self
     ]
 }
+
+#endif

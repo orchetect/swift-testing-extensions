@@ -6,9 +6,7 @@
 
 #if canImport(Testing)
 
-import SwiftCompilerPlugin
 import SwiftSyntax
-import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 import Testing
