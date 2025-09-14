@@ -73,7 +73,7 @@ This is useful in scenarios where Swift Testing's built-in `confirmation` API is
 @Test func fooTest() async throws {
     // perform some async work here
     
-    try await wait(expect: { await foo == 1 }, timeout: 2.0)
+    try await wait(require: { await foo == 1 }, timeout: 2.0)
     
     // continues test only if foo is 1 before the timeout expires...
 }
