@@ -50,16 +50,8 @@ extension TestResource.FileProtocol {
         bundle: Bundle,
         sourceLocation: SourceLocation = #_sourceLocation
     ) throws -> Data {
-        let fileURL = try #require(
-            try url(bundle: bundle, sourceLocation: sourceLocation),
-            "Test resource file not found or is not accessible.",
-            sourceLocation: sourceLocation
-        )
-        let data = try #require(
-            try Data(contentsOf: fileURL),
-            "Could not read file contents of test resource file.",
-            sourceLocation: sourceLocation
-        )
+        let fileURL = try url(bundle: bundle, sourceLocation: sourceLocation)
+        let data = try Data(contentsOf: fileURL)
         return data
     }
 }

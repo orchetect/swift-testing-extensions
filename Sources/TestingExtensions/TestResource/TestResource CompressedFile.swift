@@ -56,14 +56,8 @@ extension TestResource {
             bundle: Bundle = #moduleBundle,
             sourceLocation: SourceLocation = #_sourceLocation
         ) throws -> Data {
-            let compressedData = try #require(
-                try _rawData(bundle: bundle, sourceLocation: sourceLocation),
-                sourceLocation: sourceLocation
-            )
-            let decompressedData = try #require(
-                try compressedData.decompressed(using: compression),
-                sourceLocation: sourceLocation
-            )
+            let compressedData = try _rawData(bundle: bundle)
+            let decompressedData = try compressedData.decompressed(using: compression)
             return decompressedData
         }
         
