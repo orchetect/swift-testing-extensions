@@ -9,7 +9,7 @@ Useful Swift Testing extensions for test targets.
 Currently, the library provides a small but useful set of [Swift Testing](https://github.com/swiftlang/swift-testing) related extensions.
 
 - [Test Conditions](#Test-Conditions)
-  - [`#fail`](#fail)
+  - [`#fail()`](#fail)
   - [`wait(expect:)` and `wait(require:)`](#wait_expect_-and-wait_require_)
 - [Test Resources](#Test-Resources)
   - [File Resource](#File-Resource)
@@ -18,7 +18,7 @@ Currently, the library provides a small but useful set of [Swift Testing](https:
 
 ## Test Conditions
 
-### `#fail`
+### `#fail()`
 
 The `#fail` condition is analogous to XCTest's `XCTFail()` method and can be used as a stand-in for its functionality.
 
@@ -235,7 +235,7 @@ try TestResource.foo.manuallyDecompress(intoFolder: folder)
 
    ```swift
    dependencies: [
-       .package(url: "https://github.com/orchetect/swift-testing-extensions", from: "0.2.0")
+       .package(url: "https://github.com/orchetect/swift-testing-extensions", from: "0.2.4")
    ]
    ```
    
