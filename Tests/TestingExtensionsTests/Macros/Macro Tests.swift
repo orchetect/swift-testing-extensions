@@ -4,6 +4,8 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if canImport(TestingExtensionsMacros)
+
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
@@ -24,8 +26,6 @@ import Testing
 }
 
 // MARK: - Macro Implementation Testing
-
-#if canImport(TestingExtensionsMacros)
 
 import XCTest
 @testable import TestingExtensionsMacros
