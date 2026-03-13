@@ -33,9 +33,9 @@ let package = Package(
             name: "TestingExtensionsTests",
             dependencies: [
                 "TestingExtensions",
-                "TestingExtensionsMacros",
-                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
+                .target(name: "TestingExtensionsMacros", condition: .when(platforms: [.macOS])),
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax", condition: .when(platforms: [.macOS])),
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax", condition: .when(platforms: [.macOS]))
             ],
             resources: [.copy("TestResource/ResourceFiles")]
         )
