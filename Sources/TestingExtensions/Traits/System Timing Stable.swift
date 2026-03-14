@@ -15,7 +15,7 @@ import var Foundation.USEC_PER_SEC // also in CoreFoundation
 import func Foundation.usleep // also in CoreFoundation
 #else
 import struct FoundationEssentials.Data
-public typealias TimeInterval = Double
+import typealias FoundationEssentials.TimeInterval
 private let USEC_PER_SEC: UInt64 = 1_000_000
 import func FoundationEssentials.usleep
 #endif

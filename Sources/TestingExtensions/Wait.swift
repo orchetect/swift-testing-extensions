@@ -13,7 +13,7 @@ import struct Foundation.Date
 import typealias Foundation.TimeInterval
 #else
 import struct FoundationEssentials.Data
-public typealias TimeInterval = Double
+import typealias FoundationEssentials.TimeInterval
 #endif
 
 /// Wait for a boolean condition, failing an expectation if the condition times out without evaluating to `true`.
