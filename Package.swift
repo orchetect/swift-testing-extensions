@@ -18,8 +18,7 @@ let package = Package(
     targets: [
         .target(
             name: "TestingExtensions",
-            dependencies: ["TestingExtensionsMacros"],
-            resources: [.copy("TestResource/Base/.testResourceFolder")]
+            dependencies: ["TestingExtensionsMacros"]
         ),
         .macro(
             name: "TestingExtensionsMacros",
