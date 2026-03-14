@@ -1,3 +1,5 @@
+import class Foundation.Bundle
+import struct Foundation.Data
 import Testing
 @testable import TestWithResources
 import TestingExtensions
