@@ -149,7 +149,7 @@ jobs:
         WORKSPACEPATH: ${{ steps.sim-setup.outputs.workspace-path }}
 
   standalone-tests:
-    name: Standalone Tests (macOS)
+    name: Integration Tests
     runs-on: macos-latest
     strategy:
       matrix:
@@ -165,7 +165,7 @@ jobs:
       env:
         PACKAGE: ${{ matrix.package }}
       run: |
-        cd "Standalone Tests/$PACKAGE"
+        cd "Integration Tests/$PACKAGE"
         PARAMS=(
           -skipMacroValidation
           -workspace "$WORKSPACEPATH"
@@ -177,7 +177,7 @@ jobs:
       env:
         PACKAGE: ${{ matrix.package }}
       run: |
-        cd "Standalone Tests/$PACKAGE"
+        cd "Integration Tests/$PACKAGE"
         PARAMS=(
           -skipMacroValidation
           -workspace "$WORKSPACEPATH"
