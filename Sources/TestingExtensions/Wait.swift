@@ -8,10 +8,11 @@
 
 import Testing
 
-#if canImport(Foundation)
+#if canImport(Darwin)
 import struct Foundation.Date
 import typealias Foundation.TimeInterval
 #else
+import struct FoundationEssentials.Data
 public typealias TimeInterval = Double
 #endif
 

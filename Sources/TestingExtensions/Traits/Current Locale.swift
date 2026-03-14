@@ -6,7 +6,12 @@
 
 #if canImport(Testing) && canImport(Foundation)
 
+#if canImport(Darwin)
 import struct Foundation.Locale
+#else
+import struct FoundationEssentials.Locale
+#endif
+
 import Testing
 
 /// Returns `true` if the current locale matches the given one.

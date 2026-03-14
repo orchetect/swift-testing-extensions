@@ -8,14 +8,16 @@
 
 import Testing
 
-#if canImport(Foundation)
+#if canImport(Darwin)
 import struct Foundation.Date
 import typealias Foundation.TimeInterval
 import var Foundation.USEC_PER_SEC // also in CoreFoundation
 import func Foundation.usleep // also in CoreFoundation
 #else
+import struct FoundationEssentials.Data
 public typealias TimeInterval = Double
 private let USEC_PER_SEC: UInt64 = 1_000_000
+import func FoundationEssentials.usleep
 #endif
 
 /// Returns `true` if system conditions are suitable for executing tests that rely on precise system timing.

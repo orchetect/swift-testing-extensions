@@ -4,11 +4,16 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Foundation)
-
-import class Foundation.Bundle // synthesized by `#moduleBundle` macro
+#if canImport(Darwin)
+import class Foundation.Bundle
 import struct Foundation.Data
 import class Foundation.FileManager
+#else
+import class FoundationEssentials.Bundle
+import struct FoundationEssentials.Data
+import class FoundationEssentials.FileManager
+#endif
+
 import Testing
 @testable import TestingExtensions
 

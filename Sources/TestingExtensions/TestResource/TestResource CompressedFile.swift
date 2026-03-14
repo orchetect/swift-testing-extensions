@@ -4,11 +4,16 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Testing) && canImport(Foundation)
+#if canImport(Testing)
 
+#if canImport(Darwin)
 import class Foundation.Bundle
 import struct Foundation.Data
-import class Foundation.NSData
+#else
+import class FoundationEssentials.Bundle
+import struct FoundationEssentials.Data
+#endif
+
 import Testing
 
 extension TestResource {

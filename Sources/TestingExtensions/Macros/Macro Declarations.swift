@@ -6,9 +6,11 @@
 
 // MARK: - Freestanding Macros
 
-#if canImport(Foundation)
-
+#if canImport(Darwin)
 import class Foundation.Bundle
+#else
+import class FoundationEssentials.Bundle
+#endif
 
 /// Returns the module bundle (`Module.bundle`) for the current scope.
 ///
@@ -17,8 +19,6 @@ import class Foundation.Bundle
 @freestanding(expression)
 public macro moduleBundle() -> Bundle =
     #externalMacro(module: "TestingExtensionsMacros", type: "ModuleBundleMacro")
-
-#endif
 
 // MARK: - Swift Testing Extensions
 

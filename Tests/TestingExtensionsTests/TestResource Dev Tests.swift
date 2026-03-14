@@ -6,6 +6,7 @@
 
 #if os(macOS)
 
+import class Foundation.Bundle
 import class Foundation.FileManager
 import struct Foundation.URL
 import Testing

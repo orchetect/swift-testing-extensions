@@ -4,12 +4,20 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Testing) && canImport(Foundation)
+#if canImport(Testing)
 
+#if canImport(Darwin)
 import class Foundation.Bundle
 import struct Foundation.Data
 import class Foundation.FileManager
 import struct Foundation.URL
+#else
+import class FoundationEssentials.Bundle
+import struct FoundationEssentials.Data
+import class FoundationEssentials.FileManager
+import struct FoundationEssentials.URL
+#endif
+
 import Testing
 
 extension TestResource.CompressedFile {

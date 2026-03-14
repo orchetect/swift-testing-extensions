@@ -6,9 +6,16 @@
 
 #if canImport(Testing) && canImport(Foundation)
 
+#if canImport(Darwin)
 import class Foundation.Bundle
 import struct Foundation.Data
 import struct Foundation.URL
+#else
+import class FoundationEssentials.Bundle
+import struct FoundationEssentials.Data
+import struct FoundationEssentials.URL
+#endif
+
 import Testing
 
 extension TestResource {
