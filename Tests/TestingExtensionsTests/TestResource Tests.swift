@@ -43,9 +43,3 @@ extension TestResource {
     let string = try #require(String(data: data, encoding: .utf8))
     #expect(string == "Bar file content")
 }
-
-@Test(.enabledIfShiftOnlyIsDown)
-func manualCompressionUtility() async throws {
-    // try TestResource.bar.manuallyCompressFile(locatedIn: .desktopDirectory)
-    // try TestResource.bar.manuallyDecompress(intoFolder: .desktopDirectory)
-}
