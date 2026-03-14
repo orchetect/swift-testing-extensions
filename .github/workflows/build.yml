@@ -185,3 +185,14 @@ jobs:
           -destination "platform=macOS"
         )
         xcodebuild test "${PARAMS[@]}" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+
+  linux:
+    name: Tests (Linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@main
+    - name: Build
+      run: swift build
+    - name: Unit Tests
+      run: swift test
