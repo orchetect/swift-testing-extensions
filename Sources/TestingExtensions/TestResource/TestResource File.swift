@@ -4,7 +4,10 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Testing)
+
+import class Foundation.Bundle
+import struct Foundation.Data
 import Testing
 
 extension TestResource {
@@ -48,3 +51,5 @@ extension TestResource.File {
         return fn
     }
 }
+
+#endif

@@ -8,10 +8,14 @@
 
 import Testing
 
-#if os(macOS)
-import AppKit
+#if canImport(Foundation) && canImport(Dispatch)
+import struct Foundation.Date
+import typealias Foundation.TimeInterval
+import func Foundation.usleep
+import var Dispatch.USEC_PER_SEC
 #else
-import UIKit
+public typealias TimeInterval = Double
+private let USEC_PER_SEC: UInt64 = 1_000_000
 #endif
 
 /// Returns `true` if system conditions are suitable for executing tests that rely on precise system timing.
@@ -27,10 +31,10 @@ public func isSystemTimingStable(
     duration: TimeInterval = 0.1,
     tolerance: TimeInterval = 0.01
 ) -> Bool {
-    let durationMS = UInt32(duration * TimeInterval(USEC_PER_SEC))
+    let durationUS = UInt32(duration * TimeInterval(USEC_PER_SEC))
     
     let start = Date()
-    usleep(durationMS)
+    usleep(durationUS)
     let end = Date()
     let diff = end.timeIntervalSince(start)
     

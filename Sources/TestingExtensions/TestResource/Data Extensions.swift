@@ -4,7 +4,8 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+import struct Foundation.Data
+import class Foundation.NSData
 
 // Apple claims that LZFSE compresses with a ratio comparable to that of zlib (DEFLATE) and
 // decompresses two to three times faster while using fewer resources, therefore offering higher energy efficiency than zlib.

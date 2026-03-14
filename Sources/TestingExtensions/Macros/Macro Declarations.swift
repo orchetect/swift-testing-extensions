@@ -4,7 +4,7 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+import class Foundation.Bundle
 
 // MARK: - Generic
 
@@ -19,8 +19,8 @@ public macro moduleBundle() -> Bundle =
 // MARK: - Swift Testing Extensions
 
 #if canImport(Testing)
-import Testing
 
+import Testing
 
 /// The `#fail` condition is an extension of Swift Testing and is analogous to XCTest's `XCTFail()`
 /// method and can be used as a stand-in for its functionality.

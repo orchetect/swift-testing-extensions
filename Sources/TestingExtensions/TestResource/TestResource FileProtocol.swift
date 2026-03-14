@@ -4,7 +4,11 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Testing)
+
+import class Foundation.Bundle
+import struct Foundation.Data
+import struct Foundation.URL
 import Testing
 
 extension TestResource {
@@ -73,3 +77,5 @@ extension TestResource.FileProtocol /* : Hashable */ {
         hasher.combine(subFolder)
     }
 }
+
+#endif

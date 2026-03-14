@@ -4,7 +4,9 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+import class Foundation.Bundle // synthesized by `#moduleBundle` macro
+import struct Foundation.Data
+import class Foundation.FileManager
 import Testing
 @testable import TestingExtensions
 

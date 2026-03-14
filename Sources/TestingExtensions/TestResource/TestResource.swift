@@ -4,9 +4,6 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-import Testing
-
 /// Namespace for resources files on disk used for unit testing.
 ///
 /// Recommended structure for using ``TestResource``:

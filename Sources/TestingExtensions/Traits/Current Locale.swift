@@ -6,13 +6,8 @@
 
 #if canImport(Testing)
 
+import struct Foundation.Locale
 import Testing
-
-#if os(macOS)
-import AppKit
-#else
-import UIKit
-#endif
 
 /// Returns `true` if the current locale matches the given one.
 public func isCurrentLocale(_ locale: Locale) -> Bool {

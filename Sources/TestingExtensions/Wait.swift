@@ -8,6 +8,13 @@
 
 import Testing
 
+#if canImport(Foundation)
+import struct Foundation.Date
+import typealias Foundation.TimeInterval
+#else
+public typealias TimeInterval = Double
+#endif
+
 /// Wait for a boolean condition, failing an expectation if the condition times out without evaluating to `true`.
 public func wait(
     expect condition: @Sendable () async throws -> Bool,
@@ -19,13 +26,11 @@ public func wait(
     let timeout = max(timeout, 0.001) // sanitize: clamp
     let pollingInterval = max(pollingInterval, 0.001) // sanitize: clamp
     
-    let pollingIntervalNS = UInt64(pollingInterval * TimeInterval(NSEC_PER_SEC))
-    
     let startTime = Date()
     
     while Date().timeIntervalSince(startTime) < timeout {
         if try await condition() { return }
-        try? await Task.sleep(nanoseconds: pollingIntervalNS)
+        try? await Task.sleep(seconds: pollingInterval)
     }
     
     #expect(try await condition(), comment, sourceLocation: sourceLocation)
@@ -42,13 +47,11 @@ public func wait(
     let timeout = max(timeout, 0.001) // sanitize: clamp
     let pollingInterval = max(pollingInterval, 0.001) // sanitize: clamp
     
-    let pollingIntervalNS = UInt64(pollingInterval * TimeInterval(NSEC_PER_SEC))
-    
     let startTime = Date()
     
     while Date().timeIntervalSince(startTime) < timeout {
         if try await condition() { return }
-        try await Task.sleep(nanoseconds: pollingIntervalNS)
+        try await Task.sleep(seconds: pollingInterval)
     }
     
     try #require(await condition(), comment, sourceLocation: sourceLocation)

@@ -9,9 +9,9 @@
 import Testing
 
 #if os(macOS)
-import AppKit
+import class AppKit.NSEvent
 #else
-import UIKit
+import class UIKit.NSEvent
 #endif
 
 /// Returns `true` if the keyboard **Shift** key is currently pressed by the user.
@@ -24,6 +24,7 @@ public func isShiftOnlyDown() -> Bool {
     return flags.contains(.shift) &&
         invalidFlags.allSatisfy { !flags.contains($0) }
     #else
+    assertionFailure("Not yet supported on this platform.")
     return false
     #endif
 }
