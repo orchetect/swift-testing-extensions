@@ -13,10 +13,10 @@ import class Foundation.NSData
 extension TestResource.CompressionAlgorithm {
     var nsDataCompressionAlgorithm: NSData.CompressionAlgorithm {
         switch self {
-        case .lzfse: .lzfse
-        case .lz4: .lz4
-        case .lzma: .lzma
         case .deflate: .zlib
+        case .lz4: .lz4
+        case .lzfse: .lzfse
+        case .lzma: .lzma
         }
     }
 }
@@ -68,14 +68,14 @@ extension Data {
         using algorithm: TestResource.CompressionAlgorithm
     ) throws -> Data {
         switch algorithm {
-        case .lzfse: // not yet supported
-            throw TestResourceError.notSupported
+        case .deflate: // supported
+            return Deflate.compress(data: self)
         case .lz4: // supported
             return LZ4.compress(data: self)
+        case .lzfse: // not yet supported
+            throw TestResourceError.notSupported
         case .lzma: // not yet supported
             throw TestResourceError.notSupported
-        case .zlib: // supported
-            return Deflate.compress(data: self)
         }
     }
     
@@ -84,14 +84,14 @@ extension Data {
         using algorithm: TestResource.CompressionAlgorithm
     ) throws -> Data {
         switch algorithm {
-        case .lzfse: // not yet supported
-            throw TestResourceError.notSupported
+        case .deflate: // supported
+            return try Deflate.decompress(data: self)
         case .lz4: // supported
             return try LZ4.decompress(data: self)
+        case .lzfse: // not yet supported
+            throw TestResourceError.notSupported
         case .lzma: // supported
             return try LZMA.decompress(data: self)
-        case .zlib: // supported
-            return try Deflate.decompress(data: self)
         }
     }
 }
