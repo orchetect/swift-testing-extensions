@@ -6,6 +6,7 @@
 
 public enum TestResourceError: Error {
     case fileExists
+    case notSupported
 }
 
 extension TestResourceError: Equatable { }
@@ -19,6 +20,8 @@ extension TestResourceError {
         switch self {
         case .fileExists:
             "File already exists."
+        case .notSupported:
+            "Feature is not yet supported."
         }
     }
 }

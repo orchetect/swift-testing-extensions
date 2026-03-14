@@ -27,13 +27,13 @@ extension TestResource {
         
         public let subFolder: String?
         
-        public let compression: NSData.CompressionAlgorithm
+        public let compression: CompressionAlgorithm
         
         public init(
             name: String,
             ext: String? = nil,
             subFolder: String? = nil,
-            compression: NSData.CompressionAlgorithm
+            compression: CompressionAlgorithm
         ) {
             self.name = name
             self._ext = ext
