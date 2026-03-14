@@ -12,12 +12,12 @@ import Testing
 import struct Foundation.Date
 import typealias Foundation.TimeInterval
 import var Foundation.USEC_PER_SEC // also in CoreFoundation
-import func Foundation.usleep // also in CoreFoundation
+import class Foundation.Thread
 #else
 import struct FoundationEssentials.Data
 import typealias FoundationEssentials.TimeInterval
 private let USEC_PER_SEC: UInt64 = 1_000_000
-import func FoundationEssentials.usleep
+import class Foundation.Thread
 #endif
 
 /// Returns `true` if system conditions are suitable for executing tests that rely on precise system timing.
@@ -33,10 +33,8 @@ public func isSystemTimingStable(
     duration: TimeInterval = 0.1,
     tolerance: TimeInterval = 0.01
 ) -> Bool {
-    let durationUS = UInt32(duration * TimeInterval(USEC_PER_SEC))
-    
     let start = Date()
-    usleep(durationUS)
+    Thread.sleep(forTimeInterval: duration)
     let end = Date()
     let diff = end.timeIntervalSince(start)
     
