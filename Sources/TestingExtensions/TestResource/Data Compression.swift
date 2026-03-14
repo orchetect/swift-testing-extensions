@@ -63,6 +63,7 @@ import struct FoundationEssentials.Data
 import SWCompression
 
 extension Data {
+    /// Compress data.
     func compressed(
         using algorithm: TestResource.CompressionAlgorithm
     ) throws -> Data {
@@ -70,11 +71,11 @@ extension Data {
         case .lzfse: // not yet supported
             throw TestResourceError.notSupported
         case .lz4: // supported
-            LZ4.compress(data: self)
+            return LZ4.compress(data: self)
         case .lzma: // not yet supported
             throw TestResourceError.notSupported
         case .zlib: // supported
-            Deflate.compress(data: self)
+            return Deflate.compress(data: self)
         }
     }
     
@@ -86,11 +87,11 @@ extension Data {
         case .lzfse: // not yet supported
             throw TestResourceError.notSupported
         case .lz4: // supported
-            try LZ4.decompress(data: self)
+            return try LZ4.decompress(data: self)
         case .lzma: // supported
-            try LZMA.decompress(data: self)
+            return try LZMA.decompress(data: self)
         case .zlib: // supported
-            try Deflate.decompress(data: self)
+            return try Deflate.decompress(data: self)
         }
     }
 }
