@@ -40,3 +40,14 @@ let package = Package(
         )
     ]
 )
+
+#if !canImport(Darwin)
+// Data compression dependency for Linux and Windows where Apple's NSData compression isn't available.
+package.dependencies.append(
+    name: "SWCompression",
+    url: .package(url: "https://github.com/tsolomko/SWCompression", from: "4.8.6")
+)
+package.targets.first(where: { $0.name == "TestingExtensions" })?.dependencies.append(
+    "SWCompression"
+)
+#endif
