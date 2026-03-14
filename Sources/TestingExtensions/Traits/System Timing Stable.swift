@@ -14,7 +14,7 @@ import typealias Foundation.TimeInterval
 import var Foundation.USEC_PER_SEC // also in CoreFoundation
 import class Foundation.Thread
 #else
-import struct FoundationEssentials.Data
+import struct FoundationEssentials.Date
 import typealias FoundationEssentials.TimeInterval
 private let USEC_PER_SEC: UInt64 = 1_000_000
 import class Foundation.Thread

@@ -12,7 +12,7 @@ import Testing
 import struct Foundation.Date
 import typealias Foundation.TimeInterval
 #else
-import struct FoundationEssentials.Data
+import struct FoundationEssentials.Date
 import typealias FoundationEssentials.TimeInterval
 #endif
 

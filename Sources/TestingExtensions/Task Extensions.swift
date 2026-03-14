@@ -9,7 +9,7 @@ import struct Foundation.Date
 import var Foundation.NSEC_PER_SEC // also in CoreFoundation
 import typealias Foundation.TimeInterval
 #else
-import struct FoundationEssentials.Data
+import struct FoundationEssentials.Date
 import typealias FoundationEssentials.TimeInterval
 private let NSEC_PER_SEC: UInt64 = 1_000_000_000
 #endif
