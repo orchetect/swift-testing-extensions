@@ -12,7 +12,7 @@ import struct Foundation.Data
 import class Foundation.FileManager
 import struct Foundation.URL
 #else
-import class FoundationEssentials.Bundle
+import class Foundation.Bundle
 import struct FoundationEssentials.Data
 import class FoundationEssentials.FileManager
 import struct FoundationEssentials.URL

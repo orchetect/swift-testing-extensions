@@ -11,7 +11,7 @@ import class Foundation.Bundle
 import struct Foundation.Data
 import struct Foundation.URL
 #else
-import class FoundationEssentials.Bundle
+import class Foundation.Bundle
 import struct FoundationEssentials.Data
 import struct FoundationEssentials.URL
 #endif

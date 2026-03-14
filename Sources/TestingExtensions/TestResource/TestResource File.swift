@@ -10,7 +10,7 @@
 import class Foundation.Bundle
 import struct Foundation.Data
 #else
-import class FoundationEssentials.Bundle
+import class Foundation.Bundle
 import struct FoundationEssentials.Data
 #endif
 

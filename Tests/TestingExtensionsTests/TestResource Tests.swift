@@ -9,7 +9,7 @@ import class Foundation.Bundle
 import struct Foundation.Data
 import class Foundation.FileManager
 #else
-import class FoundationEssentials.Bundle
+import class Foundation.Bundle
 import struct FoundationEssentials.Data
 import class FoundationEssentials.FileManager
 #endif

@@ -9,7 +9,7 @@
 #if canImport(Darwin)
 import class Foundation.Bundle
 #else
-import class FoundationEssentials.Bundle
+import class Foundation.Bundle
 #endif
 
 /// Returns the module bundle (`Module.bundle`) for the current scope.
