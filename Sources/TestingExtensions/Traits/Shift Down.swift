@@ -10,8 +10,8 @@ import Testing
 
 #if os(macOS)
 import class AppKit.NSEvent
-#else
-import class UIKit.NSEvent
+#elseif canImport(UIKit)
+import UIKit
 #endif
 
 /// Returns `true` if the keyboard **Shift** key is currently pressed by the user.
