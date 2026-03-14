@@ -147,3 +147,41 @@ jobs:
         ID: ${{ steps.sim-setup.outputs.id }}
         PLATFORM: ${{ steps.sim-setup.outputs.platform }}
         WORKSPACEPATH: ${{ steps.sim-setup.outputs.workspace-path }}
+
+  standalone-tests:
+    name: Standalone Tests (macOS)
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        package: [TestWithoutResources, TestWithResources]
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@main
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+    
+    - name: Build
+      env:
+        PACKAGE: ${{ matrix.package }}
+      run: |
+        cd "Standalone Tests/$PACKAGE"
+        PARAMS=(
+          -skipMacroValidation
+          -workspace "$WORKSPACEPATH"
+          -scheme "$PACKAGE"
+          -destination "generic/platform=macOS"
+        )
+        xcodebuild build "${PARAMS[@]}" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+    - name: Unit Tests
+      env:
+        PACKAGE: ${{ matrix.package }}
+      run: |
+        cd "Standalone Tests/$PACKAGE"
+        PARAMS=(
+          -skipMacroValidation
+          -workspace "$WORKSPACEPATH"
+          -scheme "$PACKAGE"
+          -destination "platform=macOS"
+        )
+        xcodebuild test "${PARAMS[@]}" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
