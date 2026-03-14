@@ -8,11 +8,11 @@
 
 import Testing
 
-#if canImport(Foundation) && canImport(Dispatch)
+#if canImport(Foundation)
 import struct Foundation.Date
 import typealias Foundation.TimeInterval
-import func Foundation.usleep
-import var Dispatch.USEC_PER_SEC
+import var Foundation.USEC_PER_SEC // also in CoreFoundation
+import func Foundation.usleep // also in CoreFoundation
 #else
 public typealias TimeInterval = Double
 private let USEC_PER_SEC: UInt64 = 1_000_000

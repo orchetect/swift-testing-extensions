@@ -4,11 +4,11 @@
 //  © 2025 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Foundation) && canImport(Dispatch)
+#if canImport(Foundation)
 import struct Foundation.Date
+import var Foundation.NSEC_PER_SEC // also in CoreFoundation
 import typealias Foundation.TimeInterval
-import func Foundation.usleep
-import var Dispatch.NSEC_PER_SEC
+import func Foundation.usleep // also in CoreFoundation
 #else
 public typealias TimeInterval = Double
 private let NSEC_PER_SEC: UInt64 = 1_000_000_000

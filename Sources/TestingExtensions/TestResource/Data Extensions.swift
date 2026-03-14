@@ -4,6 +4,8 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if canImport(Foundation)
+
 import struct Foundation.Data
 import class Foundation.NSData
 
@@ -38,3 +40,5 @@ extension NSData.CompressionAlgorithm {
         }
     }
 }
+
+#endif

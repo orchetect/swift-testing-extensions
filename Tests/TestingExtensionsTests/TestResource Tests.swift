@@ -4,6 +4,8 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if canImport(Foundation)
+
 import class Foundation.Bundle // synthesized by `#moduleBundle` macro
 import struct Foundation.Data
 import class Foundation.FileManager
@@ -43,3 +45,5 @@ extension TestResource {
     let string = try #require(String(data: data, encoding: .utf8))
     #expect(string == "Bar file content")
 }
+
+#endif
