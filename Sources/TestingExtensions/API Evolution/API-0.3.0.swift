@@ -9,5 +9,5 @@
 extension TestResource.CompressionAlgorithm {
     @_documentation(visibility: internal)
     @available(*, deprecated, renamed: "deflate")
-    public var zlib: Self { .deflate }
+    public static var zlib: Self { .deflate }
 }
