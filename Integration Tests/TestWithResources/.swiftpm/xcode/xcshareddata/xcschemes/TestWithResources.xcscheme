@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DependencyTest"
-               BuildableName = "DependencyTest"
-               BlueprintName = "DependencyTest"
+               BlueprintIdentifier = "TestWithResources"
+               BuildableName = "TestWithResources"
+               BlueprintName = "TestWithResources"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,9 +34,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DependencyTestTests"
-               BuildableName = "DependencyTestTests"
-               BlueprintName = "DependencyTestTests"
+               BlueprintIdentifier = "TestWithResourcesTests"
+               BuildableName = "TestWithResourcesTests"
+               BlueprintName = "TestWithResourcesTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -62,9 +62,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DependencyTest"
-            BuildableName = "DependencyTest"
-            BlueprintName = "DependencyTest"
+            BlueprintIdentifier = "TestWithResources"
+            BuildableName = "TestWithResources"
+            BlueprintName = "TestWithResources"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

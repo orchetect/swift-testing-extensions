@@ -3,11 +3,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "DependencyTest",
+    name: "TestWithoutResources",
     products: [
         .library(
-            name: "DependencyTest",
-            targets: ["DependencyTest"]
+            name: "TestWithoutResources",
+            targets: ["TestWithoutResources"]
         )
     ],
     dependencies: [
@@ -15,15 +15,14 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "DependencyTest"
+            name: "TestWithoutResources"
         ),
         .testTarget(
-            name: "DependencyTestTests",
+            name: "TestWithoutResourcesTests",
             dependencies: [
-                "DependencyTest",
+                "TestWithoutResources",
                 .product(name: "TestingExtensions", package: "swift-testing-extensions"),
-            ],
-            resources: [.copy("TestResource/Text Files")]
+            ]
         )
     ]
 )

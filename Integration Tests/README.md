@@ -1,4 +1,4 @@
-# Standalone Tests
+# Integration Tests
 
 The contents of this folder are used during automated testing.
 
