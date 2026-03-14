@@ -27,13 +27,13 @@ extension TestResource {
         
         public let subFolder: String?
         
-        public let compression: CompressionAlgorithm
+        public let compression: any Compression
         
         public init(
             name: String,
             ext: String? = nil,
             subFolder: String? = nil,
-            compression: CompressionAlgorithm
+            compression: any Compression
         ) {
             self.name = name
             self._ext = ext
@@ -66,7 +66,7 @@ extension TestResource {
             sourceLocation: SourceLocation = #_sourceLocation
         ) throws -> Data {
             let compressedData = try _rawData(bundle: bundle)
-            let decompressedData = try compressedData.decompressed(using: compression)
+            let decompressedData = try compression.decompress(data: compressedData)
             return decompressedData
         }
         

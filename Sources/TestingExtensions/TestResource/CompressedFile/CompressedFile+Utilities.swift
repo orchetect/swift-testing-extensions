@@ -51,7 +51,7 @@ extension TestResource.CompressedFile {
     public func manuallyCompressFile(locatedIn inputFolder: URL) throws {
         let inputFile = inputFolder.appendingPathComponent(fileNameWithoutCompressionSuffix)
         let data = try Data(contentsOf: inputFile)
-        let compressed = try data.compressed(using: compression)
+        let compressed = try compression.compress(data: data)
         let outURL = inputFolder.appendingPathComponent(fileName)
         guard !FileManager.default.fileExists(atPath: outURL.path) else {
             throw TestResourceError.fileExists
