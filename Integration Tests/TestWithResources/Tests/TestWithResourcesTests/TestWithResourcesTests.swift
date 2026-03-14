@@ -1,5 +1,5 @@
 import Testing
-@testable import DependencyTest
+@testable import TestWithResources
 import TestingExtensions
 
 @Test func waitExpect() async throws {
