@@ -19,7 +19,7 @@ import Testing
 ///    ```swift
 ///    .testTarget(
 ///        ...
-///        resources: [.copy("TestResource/TextFiles")]
+///        resources: [.copy("TestResource/Text Files")]
 ///    )
 ///    ```
 ///    > Important: DO NOT name any folders "Resources" otherwise Xcode may fail to build targets.
@@ -33,10 +33,10 @@ import Testing
 ///    ```swift
 ///    extension TestResource {
 ///        static let foo = TestResource.File(
-///            name: "Foo", ext: "txt", subFolder: "TextFiles"
+///            name: "Foo", ext: "txt", subFolder: "Text Files"
 ///        )
 ///        static let bar = TestResource.File(
-///            name: "Bar", ext: "csv", subFolder: "TextFiles"
+///            name: "Bar", ext: "csv", subFolder: "Text Files"
 ///        )
 ///    }
 ///    ```
@@ -50,7 +50,7 @@ import Testing
 ///    ```swift
 ///    extension TestResource {
 ///        actor TextFiles {
-///            static let subFolder = "TextFiles"
+///            static let subFolder = "Text Files"
 ///
 ///            static let foo = TestResource.File(
 ///                name: "Foo", ext: "txt", subFolder: subFolder
@@ -58,7 +58,7 @@ import Testing
 ///            // etc. ...
 ///        }
 ///        actor JSONFiles {
-///            static let subFolder = "JSONFiles"
+///            static let subFolder = "JSON Files"
 ///
 ///            static let bar = TestResource.File(
 ///                name: "Bar", ext: "json", subFolder: subFolder
