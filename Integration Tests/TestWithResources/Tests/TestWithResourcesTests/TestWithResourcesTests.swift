@@ -1,5 +1,11 @@
+#if canImport(Darwin)
 import class Foundation.Bundle
 import struct Foundation.Data
+#else
+import class Foundation.Bundle
+import struct FoundationEssentials.Data
+#endif
+
 import Testing
 @testable import TestWithResources
 import TestingExtensions

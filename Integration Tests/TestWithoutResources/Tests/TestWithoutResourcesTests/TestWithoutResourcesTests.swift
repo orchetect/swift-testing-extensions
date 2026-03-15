@@ -1,4 +1,9 @@
+#if canImport(Darwin)
 import struct Foundation.URL
+#else
+import struct FoundationEssentials.URL
+#endif
+
 import Testing
 @testable import TestWithoutResources
 import TestingExtensions
