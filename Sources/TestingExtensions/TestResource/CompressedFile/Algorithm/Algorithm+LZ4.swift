@@ -100,7 +100,7 @@ extension TestResource.CompressedFile.LZ4CompressionAlgorithm: TestResource.Comp
             data.startIndex.advanced(by: headerByteCount) ..< data.endIndex.advanced(by: -footerByteCount)
         ]
         
-        try LZ4.decompress(data: dataSlice)
+        return try LZ4.decompress(data: dataSlice)
         #endif
     }
 }
