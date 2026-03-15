@@ -44,10 +44,22 @@ import Testing
         #expect(string == "Bar file content")
     }
     
-    @Test func compressedTestResourceData_lz4() async throws {
+    @Test func compressedTestResourceData_lz4_uncompressedBlock() async throws {
         let data = try TestResource.bar(.lz4).data()
         let string = try #require(String(data: data, encoding: .utf8))
         #expect(string == "Bar file content")
+    }
+    
+    @Test func compressedTestResourceData_lz4_compressedBlock() async throws {
+        // 240 bytes total, comprised of the 15-byte sequence `0x01...0x0F` repeated 16 times
+        let expectedBytes: [UInt8] = (0 ..< 16)
+            .reduce(into: []) { base, _ in
+                base.append(contentsOf: Array(UInt8(0x01)...UInt8(0x0F)))
+            }
+        #expect(expectedBytes.count == 240)
+        
+        let data = try TestResource.baz.data()
+        #expect(data == Data(expectedBytes))
     }
     
     #if canImport(Darwin) // lzfse is not yet supported on non-Apple platforms

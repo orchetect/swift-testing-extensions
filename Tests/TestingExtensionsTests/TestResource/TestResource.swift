@@ -19,4 +19,10 @@ extension TestResource {
             name: "Bar", ext: "txt", subFolder: "ResourceFiles", compression: algorithm
         )
     }
+    
+    /// This file is compressed using LZ4 in order to test compressed LZ4 data decompression.
+    /// (Note the `Bar.txt.lz4` resource file is an uncompressed plaintext LZ4 block.)
+    static let baz = TestResource.CompressedFile(
+        name: "Baz", ext: "bin", subFolder: "ResourceFiles", compression: .lz4
+    )
 }
