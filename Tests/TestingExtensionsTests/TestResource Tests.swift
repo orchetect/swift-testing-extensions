@@ -17,19 +17,6 @@ import class FoundationEssentials.FileManager
 import Testing
 @testable import TestingExtensions
 
-extension TestResource {
-    static let foo = TestResource.File(
-        name: "Foo", ext: "txt", subFolder: "ResourceFiles"
-    )
-    
-    /// This file on disk is available in compressed form using all of the available algorithms.
-    static func bar(_ algorithm: any CompressedFile.Algorithm) -> TestResource.CompressedFile {
-        TestResource.CompressedFile(
-            name: "Bar", ext: "txt", subFolder: "ResourceFiles", compression: algorithm
-        )
-    }
-}
-
 @Suite struct TestResource_Tests {
     @available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) // URL path() requirement
     @Test func testResourceURL() async throws {
