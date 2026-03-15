@@ -27,12 +27,24 @@ extension TestResource.CompressedFile {
     }
 }
 
+#if !canImport(Darwin)
+@available(*, unavailable, message: "Not yet available on this platform.")
+#endif
 extension TestResource.CompressedFile.LZFSECompressionAlgorithm: Equatable { }
 
+#if !canImport(Darwin)
+@available(*, unavailable, message: "Not yet available on this platform.")
+#endif
 extension TestResource.CompressedFile.LZFSECompressionAlgorithm: Hashable { }
 
+#if !canImport(Darwin)
+@available(*, unavailable, message: "Not yet available on this platform.")
+#endif
 extension TestResource.CompressedFile.LZFSECompressionAlgorithm: Sendable { }
 
+#if !canImport(Darwin)
+@available(*, unavailable, message: "Not yet available on this platform.")
+#endif
 extension TestResource.CompressedFile.LZFSECompressionAlgorithm: TestResource.CompressedFile.Algorithm {
     public var fileExtension: String {
         "lzfse"
@@ -61,6 +73,9 @@ extension TestResource.CompressedFile.LZFSECompressionAlgorithm: TestResource.Co
 
 // MARK: - Static Constructors
 
+#if !canImport(Darwin)
+@available(*, unavailable, message: "Not yet available on this platform.")
+#endif
 extension TestResource.CompressedFile.Algorithm where Self == TestResource.CompressedFile.LZFSECompressionAlgorithm {
     /// The LZFSE compression algorithm, recommended for use on Apple platforms.
     ///
@@ -69,9 +84,6 @@ extension TestResource.CompressedFile.Algorithm where Self == TestResource.Compr
     ///
     /// Apple claims that LZFSE compresses with a ratio comparable to that of DEFLATE (used by `zlib`) and
     /// decompresses 2-to-3 times faster while using fewer resources, offering higher energy efficiency than DEFLATE.
-    #if !canImport(Darwin)
-    @available(*, unavailable, message: "Not yet available on this platform.")
-    #endif
     public static var lzfse: TestResource.CompressedFile.LZFSECompressionAlgorithm {
         TestResource.CompressedFile.LZFSECompressionAlgorithm()
     }
