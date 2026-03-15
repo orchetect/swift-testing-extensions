@@ -43,7 +43,7 @@ extension TestResource.CompressedFile.LZ4CompressionAlgorithm: TestResource.Comp
         // So we should add them after encoding using SWCompression.
         // See: https://developer.apple.com/documentation/compression/compression_lz4
         // TODO: add header and footer bytes
-        LZ4.compress(data: self)
+        LZ4.compress(data: data)
         #endif
     }
 
@@ -59,7 +59,7 @@ extension TestResource.CompressedFile.LZ4CompressionAlgorithm: TestResource.Comp
         // So we should trim them off before decoding using SWCompression.
         // See: https://developer.apple.com/documentation/compression/compression_lz4
         // TODO: strip header and footer bytes
-        try LZ4.decompress(data: self)
+        try LZ4.decompress(data: data)
         #endif
     }
 }

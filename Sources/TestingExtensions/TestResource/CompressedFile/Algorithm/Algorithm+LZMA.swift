@@ -48,7 +48,7 @@ extension TestResource.CompressedFile.LZMACompressionAlgorithm: TestResource.Com
         try data.decompressed(using: .lzma)
         #else
         // use 3rd-party SWCompression dependency provided method
-        try LZMA.decompress(data: self)
+        try LZMA.decompress(data: data)
         #endif
     }
 }

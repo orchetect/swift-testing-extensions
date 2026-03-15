@@ -39,7 +39,7 @@ extension TestResource.CompressedFile.DeflateCompressionAlgorithm: TestResource.
         try data.compressed(using: .zlib)
         #else
         // use 3rd-party SWCompression dependency provided method
-        Deflate.compress(data: self)
+        Deflate.compress(data: data)
         #endif
     }
     
@@ -49,7 +49,7 @@ extension TestResource.CompressedFile.DeflateCompressionAlgorithm: TestResource.
         try data.decompressed(using: .zlib)
         #else
         // use 3rd-party SWCompression dependency provided method
-        try Deflate.decompress(data: self)
+        try Deflate.decompress(data: data)
         #endif
     }
 }
