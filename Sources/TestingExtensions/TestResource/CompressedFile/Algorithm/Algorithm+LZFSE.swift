@@ -1,5 +1,5 @@
 //
-//  Compression+LZFSE.swift
+//  Algorithm+LZFSE.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
@@ -11,7 +11,7 @@ import struct FoundationEssentials.Data
 import SWCompression
 #endif
 
-extension TestResource {
+extension TestResource.CompressedFile {
     /// The LZFSE compression algorithm, recommended for use on Apple platforms.
     ///
     /// The algorithm offers faster speed and generally achieves better compression than DEFLATE (used by `zlib`).
@@ -19,36 +19,38 @@ extension TestResource {
     ///
     /// Apple claims that LZFSE compresses with a ratio comparable to that of DEFLATE (used by `zlib`) and
     /// decompresses 2-to-3 times faster while using fewer resources, offering higher energy efficiency than DEFLATE.
-    public struct LZFSECompression {
+    public struct LZFSECompressionAlgorithm {
         public init() { }
     }
 }
 
-extension TestResource.LZFSECompression: Equatable { }
+extension TestResource.CompressedFile.LZFSECompressionAlgorithm: Equatable { }
 
-extension TestResource.LZFSECompression: Hashable { }
+extension TestResource.CompressedFile.LZFSECompressionAlgorithm: Hashable { }
 
-extension TestResource.LZFSECompression: Sendable { }
+extension TestResource.CompressedFile.LZFSECompressionAlgorithm: Sendable { }
 
-extension TestResource.LZFSECompression: TestResource.Compression {
+extension TestResource.CompressedFile.LZFSECompressionAlgorithm: TestResource.CompressedFile.Algorithm {
     public var fileExtension: String {
         "lzfse"
     }
 
     public func compress(data: Data) throws -> Data {
         #if canImport(Darwin)
+        // use Apple-provided NSData compression
         try data.compressed(using: .lzfse)
         #else
-        // TODO: not yet supported
+        // TODO: not yet supported by SWCompression
         throw TestResourceError.notSupported
         #endif
     }
 
     public func decompress(data: Data) throws -> Data {
         #if canImport(Darwin)
+        // use Apple-provided NSData compression
         try data.decompressed(using: .lzfse)
         #else
-        // TODO: not yet supported
+        // TODO: not yet supported by SWCompression
         throw TestResourceError.notSupported
         #endif
     }
@@ -56,7 +58,7 @@ extension TestResource.LZFSECompression: TestResource.Compression {
 
 // MARK: - Static Constructors
 
-extension TestResource.Compression where Self == TestResource.LZFSECompression {
+extension TestResource.CompressedFile.Algorithm where Self == TestResource.CompressedFile.LZFSECompressionAlgorithm {
     /// The LZFSE compression algorithm, recommended for use on Apple platforms.
     ///
     /// The algorithm offers faster speed and generally achieves better compression than DEFLATE (used by `zlib`).
@@ -64,7 +66,7 @@ extension TestResource.Compression where Self == TestResource.LZFSECompression {
     ///
     /// Apple claims that LZFSE compresses with a ratio comparable to that of DEFLATE (used by `zlib`) and
     /// decompresses 2-to-3 times faster while using fewer resources, offering higher energy efficiency than DEFLATE.
-    public static var lzfse: TestResource.LZFSECompression {
-        TestResource.LZFSECompression()
+    public static var lzfse: TestResource.CompressedFile.LZFSECompressionAlgorithm {
+        TestResource.CompressedFile.LZFSECompressionAlgorithm()
     }
 }

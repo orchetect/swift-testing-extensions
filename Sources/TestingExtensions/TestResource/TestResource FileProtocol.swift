@@ -19,6 +19,7 @@ import struct FoundationEssentials.URL
 import Testing
 
 extension TestResource {
+    /// Describes types that represent a resource file located within a test target.
     public protocol FileProtocol: Equatable, Hashable, Sendable {
         var name: String { get }
         var ext: String? { get }
@@ -70,9 +71,9 @@ extension TestResource.FileProtocol {
 // This default implementation is suitable for both `File` and `CompressedFile`
 extension TestResource.FileProtocol /* : Equatable */ {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.name == rhs.name &&
-        lhs.ext == rhs.ext &&
-        lhs.subFolder == rhs.subFolder
+        lhs.name == rhs.name
+            && lhs.ext == rhs.ext
+            && lhs.subFolder == rhs.subFolder
     }
 }
 

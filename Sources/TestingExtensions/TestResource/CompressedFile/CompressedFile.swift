@@ -17,7 +17,7 @@ import struct FoundationEssentials.Data
 import Testing
 
 extension TestResource {
-    /// Metadata describing a test resource file that exists in the test target.
+    /// Metadata describing a compressed test resource file that exists in the test target.
     public struct CompressedFile: FileProtocol {
         public let name: String
         
@@ -27,18 +27,18 @@ extension TestResource {
         
         public let subFolder: String?
         
-        public let compression: any Compression
+        public let compressionAlgorithm: any Algorithm
         
         public init(
             name: String,
             ext: String? = nil,
             subFolder: String? = nil,
-            compression: any Compression
+            compression: any Algorithm
         ) {
             self.name = name
             self._ext = ext
             self.subFolder = subFolder
-            self.compression = compression
+            self.compressionAlgorithm = compression
         }
         
         /// Returns the file extension in either its base non-compressed form or its compressed form.
@@ -52,7 +52,7 @@ extension TestResource {
             var components: [String] = []
             if let _ext { components.append(_ext) }
             if compressedForm {
-                components.append(compression.fileExtension)
+                components.append(compressionAlgorithm.fileExtension)
             }
             let output = components.joined(separator: ".")
             return output
@@ -66,7 +66,7 @@ extension TestResource {
             sourceLocation: SourceLocation = #_sourceLocation
         ) throws -> Data {
             let compressedData = try _rawData(bundle: bundle)
-            let decompressedData = try compression.decompress(data: compressedData)
+            let decompressedData = try compressionAlgorithm.decompress(data: compressedData)
             return decompressedData
         }
         

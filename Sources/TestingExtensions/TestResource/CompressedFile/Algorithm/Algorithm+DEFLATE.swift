@@ -1,5 +1,5 @@
 //
-//  Compression+DEFLATE.swift
+//  Algorithm+DEFLATE.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
@@ -11,31 +11,33 @@ import struct FoundationEssentials.Data
 import SWCompression
 #endif
 
-extension TestResource {
+extension TestResource.CompressedFile {
     /// The DEFLATE compression algorithm (used by `zlib`), recommended for cross-platform compression.
     /// This compresses and decompresses using the raw DEFLATE algorithm.
     ///
     /// Use this algorithm if your app requires interoperability with non-Apple devices.
     /// For example, if you are transferring data to another device where it needs to be compressed or decompressed.
-    public struct DeflateCompression {
+    @available(macOS, introduced: 10.15)
+    @available(iOS, introduced: 8.0)
+    public struct DeflateCompressionAlgorithm {
         public init() { }
     }
 }
 
-extension TestResource.DeflateCompression: Equatable { }
+extension TestResource.CompressedFile.DeflateCompressionAlgorithm: Equatable { }
 
-extension TestResource.DeflateCompression: Hashable { }
+extension TestResource.CompressedFile.DeflateCompressionAlgorithm: Hashable { }
 
-extension TestResource.DeflateCompression: Sendable { }
+extension TestResource.CompressedFile.DeflateCompressionAlgorithm: Sendable { }
 
-extension TestResource.DeflateCompression: TestResource.Compression {
+extension TestResource.CompressedFile.DeflateCompressionAlgorithm: TestResource.CompressedFile.Algorithm {
     public var fileExtension: String {
         "deflate"
     }
     
     public func compress(data: Data) throws -> Data {
         #if canImport(Darwin)
-        // Apple's zlib algorithm is actually just raw DEFLATE, which is used by zlib archives
+        // Apple's NSData-provided zlib algorithm is actually just raw DEFLATE, which is used by zlib archives
         try data.compressed(using: .zlib)
         #else
         // use 3rd-party SWCompression dependency provided method
@@ -45,7 +47,7 @@ extension TestResource.DeflateCompression: TestResource.Compression {
     
     public func decompress(data: Data) throws -> Data {
         #if canImport(Darwin)
-        // Apple's zlib algorithm is actually just raw DEFLATE, which is used by zlib archives
+        // Apple's NSData-provided zlib algorithm is actually just raw DEFLATE, which is used by zlib archives
         try data.decompressed(using: .zlib)
         #else
         // use 3rd-party SWCompression dependency provided method
@@ -56,13 +58,13 @@ extension TestResource.DeflateCompression: TestResource.Compression {
 
 // MARK: - Static Constructors
 
-extension TestResource.Compression where Self == TestResource.DeflateCompression {
+extension TestResource.CompressedFile.Algorithm where Self == TestResource.CompressedFile.DeflateCompressionAlgorithm {
     /// The DEFLATE compression algorithm (used by `zlib`), recommended for cross-platform compression.
     /// This compresses and decompresses using the raw DEFLATE algorithm.
     ///
     /// Use this algorithm if your app requires interoperability with non-Apple devices.
     /// For example, if you are transferring data to another device where it needs to be compressed or decompressed.
-    public static var deflate: TestResource.DeflateCompression {
-        TestResource.DeflateCompression()
+    public static var deflate: TestResource.CompressedFile.DeflateCompressionAlgorithm {
+        TestResource.CompressedFile.DeflateCompressionAlgorithm()
     }
 }

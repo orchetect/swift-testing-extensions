@@ -6,8 +6,8 @@
 
 // MARK: - 0.3.0 API Deprecations
 
-extension TestResource.Compression where Self == TestResource.DeflateCompression {
+extension TestResource.CompressedFile.Algorithm where Self == TestResource.CompressedFile.DeflateCompressionAlgorithm {
     @_documentation(visibility: internal)
     @available(*, deprecated, renamed: "deflate")
-    public static var zlib: TestResource.DeflateCompression { .deflate }
+    public static var zlib: TestResource.CompressedFile.DeflateCompressionAlgorithm { .deflate }
 }

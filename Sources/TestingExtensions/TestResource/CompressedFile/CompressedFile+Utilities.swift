@@ -21,7 +21,7 @@ import struct FoundationEssentials.URL
 import Testing
 
 extension TestResource.CompressedFile {
-    /// Utility to compress a test resource file.
+    /// Utility to compress a test target resource file (non-archive).
     ///
     /// This method can be run manually when ingesting a file for storage in the package.
     /// After compression, the file can be moved to the package within the test target's `/TestResource/X/` subfolder
@@ -51,7 +51,7 @@ extension TestResource.CompressedFile {
     public func manuallyCompressFile(locatedIn inputFolder: URL) throws {
         let inputFile = inputFolder.appendingPathComponent(fileNameWithoutCompressionSuffix)
         let data = try Data(contentsOf: inputFile)
-        let compressed = try compression.compress(data: data)
+        let compressed = try compressionAlgorithm.compress(data: data)
         let outURL = inputFolder.appendingPathComponent(fileName)
         guard !FileManager.default.fileExists(atPath: outURL.path) else {
             throw TestResourceError.fileExists
@@ -59,7 +59,7 @@ extension TestResource.CompressedFile {
         try compressed.write(to: outURL)
     }
     
-    /// Utility to decompress a test compressed resource file to the desktop.
+    /// Utility to decompress a compressed test target resource file (non-archive).
     ///
     /// > Tip:
     /// > This method is best run from a temporary test method within the same test target as the resource file.

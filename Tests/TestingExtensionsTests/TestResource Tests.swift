@@ -23,7 +23,7 @@ extension TestResource {
     )
     
     /// This file on disk is available in compressed form using all of the available algorithms.
-    static func bar(_ algorithm: any Compression) -> TestResource.CompressedFile {
+    static func bar(_ algorithm: any CompressedFile.Algorithm) -> TestResource.CompressedFile {
         TestResource.CompressedFile(
             name: "Bar", ext: "txt", subFolder: "ResourceFiles", compression: algorithm
         )
