@@ -6,6 +6,9 @@
 
 public enum TestResourceError: Error {
     case fileExists
+    case invalidDataFooter
+    case invalidDataHeader
+    case notEnoughData
     case notSupported
 }
 
@@ -20,6 +23,12 @@ extension TestResourceError {
         switch self {
         case .fileExists:
             "File already exists."
+        case .invalidDataFooter:
+            "Invalid data footer."
+        case .invalidDataHeader:
+            "Invalid data header."
+        case .notEnoughData:
+            "Not enough data."
         case .notSupported:
             "Feature is not yet supported."
         }
