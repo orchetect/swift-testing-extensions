@@ -1,6 +1,6 @@
 # swift-testing-extensions
 
-[![Platforms - macOS | iOS | tvOS | watchOS | visionOS](https://img.shields.io/badge/Platforms-macOS%20|%20iOS%20|%20tvOS%20|%20watchOS%20|%20visionOS-lightgrey.svg?style=flat)](https://developer.apple.com/swift) ![Swift 6](https://img.shields.io/badge/Swift-6-orange.svg?style=flat) [![Xcode 16](https://img.shields.io/badge/Xcode-16-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/swift-testing-extensions/blob/main/LICENSE)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2Fswift-testing-extensions%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/orchetect/swift-testing-extensions) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2Fswift-testing-extensions%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/swift-testing-extensions) [![Xcode 16](https://img.shields.io/badge/Xcode-16-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/swift-testing-extensions/blob/main/LICENSE)
 
 Useful Swift Testing extensions for test targets.
 
@@ -109,16 +109,16 @@ For example, if a single subfolder named `"TextFiles"` contains two files `Foo.t
 
 ```swift
 extension TestResource {
-    static let foo = TestResource.File(
+    static let foo = File(
         name: "Foo", ext: "txt", subFolder: "TextFiles"
     )
-    static let bar = TestResource.File(
+    static let bar = File(
         name: "Bar", ext: "csv", subFolder: "TextFiles"
     )
 }
 ```
 
-For complex testing environments it may be desirable to organize file declarations into sub-namespaces under the `TestResource` extension. In that case, simply nest them under actors.
+For complex testing environments it may be desirable to organize file declarations into sub-namespaces under the `TestResource` extension. In that case, one solution would be to use nested enums.
 
 Note that each subfolder referenced would require an individual `resources` declaration in your `Package.swift`.
 
@@ -132,7 +132,7 @@ extension TestResource {
         )
         // etc. ...
     }
-    actor JSONFiles {
+    enum JSONFiles {
         static let subFolder = "JSONFiles"
         
         static let bar = TestResource.File(
@@ -163,15 +163,15 @@ let data = try #require(try TestResource.foo.data())
 
 For each file within any subfolder(s) located with the `TestResource` folder that are to be treated as compressed files, declare them individually as static `CompressedFile` properties.
 
-For example, if a single subfolder named `"TextFiles"` contains two compressed files `Foo.txt.lzfse` and `Bar.csv.lzfse` then these would be declared as follows:
+For example, if a single subfolder named `"TextFiles"` contains two compressed files `Foo.txt.deflate` and `Bar.csv.deflate` then these would be declared as follows:
 
 ```swift
 extension TestResource {
-    static let foo = TestResource.CompressedFile(
-        name: "Foo", ext: "txt", subFolder: "TextFiles", compression: .lzfse
+    static let foo = CompressedFile(
+        name: "Foo", ext: "txt", subFolder: "TextFiles", compression: .deflate
     )
-    static let bar = TestResource.CompressedFile(
-        name: "Bar", ext: "csv", subFolder: "TextFiles", compression: .lzfse
+    static let bar = CompressedFile(
+        name: "Bar", ext: "csv", subFolder: "TextFiles", compression: .deflate
     )
 }
 ```
@@ -185,7 +185,7 @@ These files can be compressed manually by running a temporary unit test case con
     // ie: an uncompressed file named "Foo.txt" is located on the desktop
     let folder = URL.desktopDirectory
     try TestResource.foo.manuallyCompressFile(locatedIn: folder)
-    // outputs "Foo.txt.lzfse" file to the desktop, ready to move into the package
+    // outputs "Foo.txt.deflate" file to the desktop, ready to move into the package
 }
 ```
 
@@ -216,12 +216,16 @@ try TestResource.foo.manuallyDecompress(intoFolder: folder)
 > [!IMPORTANT]
 > Note that this method is not meant to be run as part of automated unit testing, but is provided as a utility when the file requires editing in order to be recompressed again and replaced in the package at a later time. For use in automated testing, call the `data()` method instead to return the uncompressed raw file content.
 
+#### Implementing Custom Compression Algorithms
+
+The library ships with several common built-in compression algorithms, but you can also define your own implementation by conforming a type to the `TestResource.CompressedFile.Algorithm` protocol.
+
 ## Installation: Swift Package Manager (SPM)
 
 ### Dependency within an Application
 
 1. Add the package to your Xcode project's test target(s) using Swift Package Manager
-   - Select File → Swift Packages → Add Package Dependency
+   - Navigate to your project settings and select the Package Dependencies tab
    - Add package using `https://github.com/orchetect/swift-testing-extensions` as the URL.
 2. Import the module in your `*.swift` test files where needed.
    ```swift
@@ -235,7 +239,7 @@ try TestResource.foo.manuallyDecompress(intoFolder: folder)
 
    ```swift
    dependencies: [
-       .package(url: "https://github.com/orchetect/swift-testing-extensions", from: "0.2.4")
+       .package(url: "https://github.com/orchetect/swift-testing-extensions", from: "0.3.0")
    ]
    ```
    
