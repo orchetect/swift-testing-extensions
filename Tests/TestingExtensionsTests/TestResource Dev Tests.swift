@@ -16,8 +16,8 @@ import Testing
 /// This is just a manually-invoked utility to compress or decompress files ad-hoc.
 @Test(.enabledIfShiftOnlyIsDown)
 func manualCompressionUtility() async throws {
-//    try TestResource.bar.manuallyCompressFile(locatedIn: .desktopDirectory)
-//    try TestResource.bar.manuallyDecompress(intoFolder: .desktopDirectory)
+//    try TestResource.baz(.lz4).manuallyCompressFile(locatedIn: .desktopDirectory)
+//    try TestResource.baz(.lz4).manuallyDecompress(intoFolder: .desktopDirectory)
 }
 
 #endif

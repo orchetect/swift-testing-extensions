@@ -50,11 +50,11 @@ package.targets.first(where: { $0.name == "TestingExtensions" })?.dependencies.a
     "SWCompression"
 )
 
-// Data parsing dependency
-package.dependencies.append(
-    .package(url: "https://github.com/orchetect/swift-data-parsing", from: "0.1.0")
-)
-package.targets.first(where: { $0.name == "TestingExtensions" })?.dependencies.append(
-    .product(name: "SwiftDataParsing", package: "swift-data-parsing")
-)
+// Data parsing dependency (for experimental LZ4 support on non-Apple platforms)
+// package.dependencies.append(
+//     .package(url: "https://github.com/orchetect/swift-data-parsing", from: "0.1.0")
+// )
+// package.targets.first(where: { $0.name == "TestingExtensions" })?.dependencies.append(
+//     .product(name: "SwiftDataParsing", package: "swift-data-parsing")
+// )
 #endif
