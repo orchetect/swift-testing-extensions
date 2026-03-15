@@ -27,6 +27,8 @@ import Testing
 
 // MARK: - Macro Implementation Testing
 
+#if canImport(XCTest)
+
 import XCTest
 @testable import TestingExtensionsMacros
 
@@ -125,5 +127,7 @@ final class AssertTests: XCTestCase {
         )
     }
 }
+
+#endif
 
 #endif

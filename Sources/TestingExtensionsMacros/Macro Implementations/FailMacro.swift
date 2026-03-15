@@ -8,7 +8,6 @@
 
 import SwiftSyntax
 import SwiftSyntaxMacros
-
 import Testing
 
 /// The `#fail()` condition is an extension of Swift Testing and is analogous to XCTest's `XCTFail()`

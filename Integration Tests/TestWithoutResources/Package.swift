@@ -11,7 +11,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../../"),
+        .package(name: "swift-testing-extensions", path: "../../"),
     ],
     targets: [
         .target(

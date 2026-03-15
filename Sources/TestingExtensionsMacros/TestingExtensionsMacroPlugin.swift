@@ -4,7 +4,7 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(SwiftCompilerPlugin)
+#if canImport(Testing) && canImport(SwiftCompilerPlugin)
 
 import SwiftCompilerPlugin
 import SwiftSyntaxMacros

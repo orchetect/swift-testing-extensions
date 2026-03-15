@@ -4,7 +4,15 @@
 //  © 2025 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Testing)
+#if canImport(Darwin)
+import struct Foundation.Date
+import var Foundation.NSEC_PER_SEC // also in CoreFoundation
+import typealias Foundation.TimeInterval
+#else
+import struct FoundationEssentials.Date
+import typealias FoundationEssentials.TimeInterval
+private let NSEC_PER_SEC: UInt64 = 1_000_000_000
+#endif
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension Task where Success == Never, Failure == Never {
@@ -21,5 +29,3 @@ extension Task where Success == Never, Failure == Never {
         try await sleep(nanoseconds: intervalNS)
     }
 }
-
-#endif

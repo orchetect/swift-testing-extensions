@@ -4,9 +4,13 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+// MARK: - Freestanding Macros
 
-// MARK: - Generic
+#if canImport(Darwin)
+import class Foundation.Bundle
+#else
+import class Foundation.Bundle
+#endif
 
 /// Returns the module bundle (`Module.bundle`) for the current scope.
 ///
@@ -19,8 +23,8 @@ public macro moduleBundle() -> Bundle =
 // MARK: - Swift Testing Extensions
 
 #if canImport(Testing)
-import Testing
 
+import Testing
 
 /// The `#fail` condition is an extension of Swift Testing and is analogous to XCTest's `XCTFail()`
 /// method and can be used as a stand-in for its functionality.

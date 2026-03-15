@@ -40,3 +40,21 @@ let package = Package(
         )
     ]
 )
+
+#if !canImport(Darwin)
+// Data compression dependency for Linux and Windows where Apple's NSData compression isn't available.
+package.dependencies.append(
+    .package(url: "https://github.com/tsolomko/SWCompression", from: "4.8.6")
+)
+package.targets.first(where: { $0.name == "TestingExtensions" })?.dependencies.append(
+    "SWCompression"
+)
+
+// Data parsing dependency (for experimental LZ4 support on non-Apple platforms)
+// package.dependencies.append(
+//     .package(url: "https://github.com/orchetect/swift-data-parsing", from: "0.1.0")
+// )
+// package.targets.first(where: { $0.name == "TestingExtensions" })?.dependencies.append(
+//     .product(name: "SwiftDataParsing", package: "swift-data-parsing")
+// )
+#endif

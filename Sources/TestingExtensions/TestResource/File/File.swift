@@ -1,10 +1,19 @@
 //
-//  TestResource File.swift
+//  File.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Testing) && canImport(Foundation)
+
+#if canImport(Darwin)
+import class Foundation.Bundle
+import struct Foundation.Data
+#else
+import class Foundation.Bundle
+import struct FoundationEssentials.Data
+#endif
+
 import Testing
 
 extension TestResource {
@@ -48,3 +57,5 @@ extension TestResource.File {
         return fn
     }
 }
+
+#endif

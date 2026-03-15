@@ -4,15 +4,15 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Testing)
+#if canImport(Testing) && canImport(Foundation)
+
+#if canImport(Darwin)
+import struct Foundation.Locale
+#else
+import struct FoundationEssentials.Locale
+#endif
 
 import Testing
-
-#if os(macOS)
-import AppKit
-#else
-import UIKit
-#endif
 
 /// Returns `true` if the current locale matches the given one.
 public func isCurrentLocale(_ locale: Locale) -> Bool {

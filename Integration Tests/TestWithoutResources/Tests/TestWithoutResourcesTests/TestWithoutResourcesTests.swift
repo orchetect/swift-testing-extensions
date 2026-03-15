@@ -1,3 +1,9 @@
+#if canImport(Darwin)
+import struct Foundation.URL
+#else
+import struct FoundationEssentials.URL
+#endif
+
 import Testing
 @testable import TestWithoutResources
 import TestingExtensions
@@ -36,6 +42,6 @@ import TestingExtensions
     // this will compile, because we are specifying the bundle parameter value, so its default is not evaluated
     withKnownIssue {
         // will trigger a failed expectation, as the file does not actually exist
-        let _ = try file.url(bundle: .main)
+        let _: URL = try file.url(bundle: .main)
     }
 }
