@@ -63,18 +63,14 @@ extension TestResource {
         #expect(string == "Bar file content")
     }
     
+    #if canImport(Darwin) // lzfse is not yet supported on non-Apple platforms
     @Test func compressedTestResourceData_lzfse() async throws {
-        #if canImport(Darwin)
         let data = try TestResource.bar(.lzfse).data()
         let string = try #require(String(data: data, encoding: .utf8))
         #expect(string == "Bar file content")
-        #else
-        withKnownIssue("lzfse compression algorithm is not yet support on non-Apple platforms.") {
-            _ = try TestResource.bar(.lzfse).data()
-        }
-        #endif
     }
-
+    #endif
+    
     @Test func compressedTestResourceData_lzma() async throws {
         let data = try TestResource.bar(.lzma).data()
         let string = try #require(String(data: data, encoding: .utf8))

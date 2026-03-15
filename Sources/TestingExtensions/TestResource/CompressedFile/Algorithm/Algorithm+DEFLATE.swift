@@ -17,8 +17,6 @@ extension TestResource.CompressedFile {
     ///
     /// Use this algorithm if your app requires interoperability with non-Apple devices.
     /// For example, if you are transferring data to another device where it needs to be compressed or decompressed.
-    @available(macOS, introduced: 10.15)
-    @available(iOS, introduced: 8.0)
     public struct DeflateCompressionAlgorithm {
         public init() { }
     }

@@ -19,6 +19,9 @@ extension TestResource.CompressedFile {
     ///
     /// Apple claims that LZFSE compresses with a ratio comparable to that of DEFLATE (used by `zlib`) and
     /// decompresses 2-to-3 times faster while using fewer resources, offering higher energy efficiency than DEFLATE.
+    #if !canImport(Darwin)
+    @available(*, unavailable, message: "Not yet available on this platform.")
+    #endif
     public struct LZFSECompressionAlgorithm {
         public init() { }
     }
@@ -66,6 +69,9 @@ extension TestResource.CompressedFile.Algorithm where Self == TestResource.Compr
     ///
     /// Apple claims that LZFSE compresses with a ratio comparable to that of DEFLATE (used by `zlib`) and
     /// decompresses 2-to-3 times faster while using fewer resources, offering higher energy efficiency than DEFLATE.
+    #if !canImport(Darwin)
+    @available(*, unavailable, message: "Not yet available on this platform.")
+    #endif
     public static var lzfse: TestResource.CompressedFile.LZFSECompressionAlgorithm {
         TestResource.CompressedFile.LZFSECompressionAlgorithm()
     }
