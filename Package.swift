@@ -49,4 +49,12 @@ package.dependencies.append(
 package.targets.first(where: { $0.name == "TestingExtensions" })?.dependencies.append(
     "SWCompression"
 )
+
+// Data parsing dependency
+package.dependencies.append(
+    .package(url: "https://github.com/orchetect/swift-data-parsing", from: "0.1.0")
+)
+package.targets.first(where: { $0.name == "TestingExtensions" })?.dependencies.append(
+    .product(name: "SwiftDataParsing", package: "swift-data-parsing")
+)
 #endif

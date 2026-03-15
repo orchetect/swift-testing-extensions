@@ -5,6 +5,7 @@
 //
 
 public enum TestResourceError: Error {
+    case corruptData
     case fileExists
     case invalidDataFooter
     case invalidDataHeader
@@ -21,6 +22,8 @@ extension TestResourceError: Sendable { }
 extension TestResourceError {
     public var localizedDescription: String {
         switch self {
+        case .corruptData:
+            "Data is corrupt."
         case .fileExists:
             "File already exists."
         case .invalidDataFooter:

@@ -9,6 +9,7 @@ import struct Foundation.Data
 #else
 import struct FoundationEssentials.Data
 import SWCompression
+import SwiftDataParsing
 #endif
 
 extension TestResource.CompressedFile {
@@ -70,37 +71,66 @@ extension TestResource.CompressedFile.LZ4CompressionAlgorithm: TestResource.Comp
         // - An uncompressed block header consists of the octets 0x62, 0x76, 0x34, and 0x2d.
         //   Following that is a single 32-bit little-endian value representing the plaintext data’s size (in bytes),
         //   and then the plaintext data itself.
-        
-        let compressedHeaderPreamble: [UInt8] = [0x62, 0x76, 0x34, 0x31]
-        let expectedCompressedHeaderByteCount: Int = 4 + 4 + 4
-        
-        let uncompressedHeaderPreamble: [UInt8] = [0x62, 0x76, 0x34, 0x2D]
-        let expectedUncompressedHeaderByteCount: Int = 4 + 4
-        
-        let headerByteCount: Int = if data.starts(with: compressedHeaderPreamble), data.count >= expectedCompressedHeaderByteCount {
-            expectedCompressedHeaderByteCount
-        } else if data.starts(with: uncompressedHeaderPreamble), data.count >= expectedUncompressedHeaderByteCount {
-            expectedUncompressedHeaderByteCount
-        } else {
-            throw TestResourceError.invalidDataHeader
-        }
+        let compressedHeader: [UInt8] = [0x62, 0x76, 0x34, 0x31]
+        let uncompressedHeader: [UInt8] = [0x62, 0x76, 0x34, 0x2D]
         
         // the block footer consists of the octets 0x62, 0x76, 0x34, and 0x24 and identifies the end of the LZ4 frame
-        
         let footer: [UInt8] = [0x62, 0x76, 0x34, 0x24]
-        let footerByteCount: Int = 4
-        guard data.suffix(4) == footer else {
-            throw TestResourceError.invalidDataFooter
+        
+        // decode block
+        
+        return try data.withDataParser { parser in
+            let header = try parser.read(bytes: 4)
+            
+            if header == compressedHeader {
+                // read header and get body data
+                guard let decodedBodyDataCount = try parser.read(bytes: 4).toUInt32(from: .littleEndian) else {
+                    throw TestResourceError.corruptData
+                }
+                guard let encodedBodyDataCount = try parser.read(bytes: 4).toUInt32(from: .littleEndian) else {
+                    throw TestResourceError.corruptData
+                }
+                let bodyData = Data(try parser.read(bytes: Int(encodedBodyDataCount)))
+                
+                // check footer
+                let footerData = try parser.read(bytes: footer.count)
+                guard footerData == footer else {
+                    throw TestResourceError.corruptData
+                }
+                guard parser.remainingByteCount == 0 else {
+                    throw TestResourceError.corruptData
+                }
+                
+                // decompress body data
+                let decompressedData = try LZ4.decompress(data: bodyData)
+                guard decompressedData.count == decodedBodyDataCount else {
+                    throw TestResourceError.corruptData
+                }
+                return decompressedData
+                
+            } else if header == uncompressedHeader {
+                // read header and get body data
+                guard let bodyDataCount = try parser.read(bytes: 4).toUInt32(from: .littleEndian) else {
+                    throw TestResourceError.corruptData
+                }
+                let bodyData = try parser.read(bytes: Int(bodyDataCount))
+                
+                // check footer
+                let footerData = try parser.read(bytes: footer.count)
+                guard footerData == footer else {
+                    throw TestResourceError.corruptData
+                }
+                guard parser.remainingByteCount == 0 else {
+                    throw TestResourceError.corruptData
+                }
+                
+                // body data is uncompressed raw text, so we don't need to make any calls to the decompressor.
+                return Data(bodyData) // create copy of data from range pointer
+                
+            } else {
+                throw TestResourceError.invalidDataHeader
+            }
         }
-        
-        // discard header and footer bytes.
-        // (we could use the header data to check overall data integrity first, but we're skipping that step because we're lazy.)
-        // no need to do data length check, as the header and footer checks guarantee forming this range won't crash
-        let dataSlice = data[
-            data.startIndex.advanced(by: headerByteCount) ..< data.endIndex.advanced(by: -footerByteCount)
-        ]
-        
-        return try LZ4.decompress(data: dataSlice)
         #endif
     }
 }
