@@ -148,7 +148,7 @@ jobs:
         PLATFORM: ${{ steps.sim-setup.outputs.platform }}
         WORKSPACEPATH: ${{ steps.sim-setup.outputs.workspace-path }}
 
-  standalone-tests:
+  integration-tests:
     name: Integration Tests
     runs-on: macos-latest
     strategy:
@@ -160,7 +160,6 @@ jobs:
     - uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: latest-stable
-    
     - name: Build
       env:
         PACKAGE: ${{ matrix.package }}
@@ -194,5 +193,7 @@ jobs:
     - uses: actions/checkout@main
     - name: Build
       run: swift build
+    - name: Delete Build Folder
+      run: rm -rf .build/
     - name: Unit Tests
       run: swift test
