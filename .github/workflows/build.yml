@@ -191,9 +191,11 @@ jobs:
     timeout-minutes: 20
     steps:
     - uses: actions/checkout@main
+    # As a workaround for flakey pre-builds included in SwiftSyntax, we have to disable them when testing any platform that isn't macOS
+    # See: https://github.com/swiftlang/swift-syntax/issues/2421#issuecomment-3542406416
     - name: Build
-      run: swift build
+      run: swift build --disable-experimental-prebuilts
     - name: Delete Build Folder
       run: rm -rf .build/
     - name: Unit Tests
-      run: swift test
+      run: swift test --disable-experimental-prebuilts
