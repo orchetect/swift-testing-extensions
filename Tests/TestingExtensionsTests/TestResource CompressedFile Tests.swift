@@ -4,8 +4,6 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if (canImport(Darwin) || os(Linux)) && canImport(Testing)
-
 #if canImport(Darwin)
 import class Foundation.Bundle
 import struct Foundation.Data
@@ -26,25 +24,33 @@ import Testing
         #expect(string == "Bar file content")
     }
     
-    /// Note that this file's data contains an **uncompressed** LZ4 data block, as determined by the algorithm
-    #if canImport(Darwin) // lz4 is not yet supported on non-Apple platforms
+    /// Note that this file's data contains an **uncompressed** LZ4 data block, as determined by the algorithm.
     @Test func compressedResourceData_lz4() async throws {
+        #if canImport(Darwin) // lz4 is not yet supported on non-Apple platforms
         let data = try TestResource.bar(.lz4).data()
         let string = try #require(String(data: data, encoding: .utf8))
         #expect(string == "Bar file content")
+        #else
+        withKnownIssue("LZ4 Compression is only supported on Apple platforms") {
+            let _ = try TestResource.bar(.lz4).data()
+        }
+        #endif
     }
-    #endif
     
-    #if canImport(Darwin) // lzfse is not yet supported on non-Apple platforms
-    /// Note that this file's data contains an **uncompressed** LZFSE data block, as determined by the algorithm
+    /// Note that this file's data contains an **uncompressed** LZFSE data block, as determined by the algorithm.
     @Test func compressedResourceData_lzfse() async throws {
+        #if canImport(Darwin) // lzfse is not yet supported on non-Apple platforms
         let data = try TestResource.bar(.lzfse).data()
         let string = try #require(String(data: data, encoding: .utf8))
         #expect(string == "Bar file content")
+        #else
+        withKnownIssue("LZFSE Compression is only supported on Apple platforms") {
+            let _ = try TestResource.bar(.lzfse).data()
+        }
+        #endif
     }
-    #endif
     
-    /// Note that this file's data contains an **uncompressed** LZMA2 data block, as determined by the algorithm
+    /// Note that this file's data contains an **uncompressed** LZMA2 data block, as determined by the algorithm.
     @Test func compressedResourceData_lzma2xz() async throws {
         let data = try TestResource.bar(.lzma2xz).data()
         let string = try #require(String(data: data, encoding: .utf8))
@@ -71,27 +77,33 @@ import Testing
         #expect(data == expectedData)
     }
     
-    #if canImport(Darwin) // lz4 is not yet supported on non-Apple platforms
-    /// Note that this file's data contains a **compressed** LZ4 data block, as determined by the algorithm
+    /// Note that this file's data contains a **compressed** LZ4 data block, as determined by the algorithm.
     @Test mutating func compressedResourceData_lz4() async throws {
+        #if canImport(Darwin) // lz4 is not yet supported on non-Apple platforms
         let data = try TestResource.baz(.lz4).data()
         #expect(data == expectedData)
+        #else
+        withKnownIssue("LZ4 Compression is only supported on Apple platforms") {
+            let _ = try TestResource.baz(.lz4).data()
+        }
+        #endif
     }
-    #endif
     
-    #if canImport(Darwin) // lzfse is not yet supported on non-Apple platforms
-    /// Note that this file's data contains a **compressed** LZFSE data block, as determined by the algorithm
+    /// Note that this file's data contains a **compressed** LZFSE data block, as determined by the algorithm.
     @Test mutating func compressedResourceData_lzfse() async throws {
+        #if canImport(Darwin) // lzfse is not yet supported on non-Apple platforms
         let data = try TestResource.baz(.lzfse).data()
         #expect(data == expectedData)
+        #else
+        withKnownIssue("LZFSE Compression is only supported on Apple platforms") {
+            let _ = try TestResource.baz(.lzfse).data()
+        }
+        #endif
     }
-    #endif
     
-    /// Note that this file's data contains a **compressed** LZMA2 data block, as determined by the algorithm
+    /// Note that this file's data contains a **compressed** LZMA2 data block, as determined by the algorithm.
     @Test mutating func compressedResourceData_lzma2xz() async throws {
         let data = try TestResource.baz(.lzma2xz).data()
         #expect(data == expectedData)
     }
 }
-
-#endif

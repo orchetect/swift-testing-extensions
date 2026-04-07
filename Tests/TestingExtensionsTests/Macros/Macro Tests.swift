@@ -4,7 +4,7 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(TestingExtensionsMacros)
+#if os(macOS) && canImport(TestingExtensionsMacros)
 
 import SwiftSyntax
 import SwiftSyntaxBuilder
