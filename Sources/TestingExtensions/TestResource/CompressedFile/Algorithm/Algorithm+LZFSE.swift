@@ -4,12 +4,18 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if canImport(Testing)
+
 #if canImport(Darwin)
 import struct Foundation.Data
 #else
 import struct FoundationEssentials.Data
+#endif
+
+#if os(Linux)
 import SWCompression
 #endif
+
 
 extension TestResource.CompressedFile {
     /// The LZFSE compression algorithm, recommended for use on Apple platforms.
@@ -54,8 +60,10 @@ extension TestResource.CompressedFile.LZFSECompressionAlgorithm: TestResource.Co
         #if canImport(Darwin)
         // use Apple-provided NSData compression
         try data.compressed(using: .lzfse)
-        #else
+        #elseif os(Linux)
         // TODO: not yet supported by SWCompression
+        throw TestResourceError.notSupported
+        #else
         throw TestResourceError.notSupported
         #endif
     }
@@ -64,8 +72,10 @@ extension TestResource.CompressedFile.LZFSECompressionAlgorithm: TestResource.Co
         #if canImport(Darwin)
         // use Apple-provided NSData compression
         try data.decompressed(using: .lzfse)
-        #else
+        #elseif os(Linux)
         // TODO: not yet supported by SWCompression
+        throw TestResourceError.notSupported
+        #else
         throw TestResourceError.notSupported
         #endif
     }
@@ -88,3 +98,5 @@ extension TestResource.CompressedFile.Algorithm where Self == TestResource.Compr
         TestResource.CompressedFile.LZFSECompressionAlgorithm()
     }
 }
+
+#endif

@@ -4,10 +4,15 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if canImport(Testing)
+
 #if canImport(Darwin)
 import struct Foundation.Data
 #else
 import struct FoundationEssentials.Data
+#endif
+
+#if os(Linux)
 import SWCompression
 #endif
 
@@ -37,9 +42,11 @@ extension TestResource.CompressedFile.DeflateCompressionAlgorithm: TestResource.
         #if canImport(Darwin)
         // Apple's NSData-provided zlib algorithm is actually just raw DEFLATE, which is used by zlib archives
         try data.compressed(using: .zlib)
-        #else
+        #elseif os(Linux)
         // use 3rd-party SWCompression dependency provided method
         Deflate.compress(data: data)
+        #else
+        throw TestResourceError.notSupported
         #endif
     }
     
@@ -47,9 +54,11 @@ extension TestResource.CompressedFile.DeflateCompressionAlgorithm: TestResource.
         #if canImport(Darwin)
         // Apple's NSData-provided zlib algorithm is actually just raw DEFLATE, which is used by zlib archives
         try data.decompressed(using: .zlib)
-        #else
+        #elseif os(Linux)
         // use 3rd-party SWCompression dependency provided method
         try Deflate.decompress(data: data)
+        #else
+        throw TestResourceError.notSupported
         #endif
     }
 }
@@ -66,3 +75,5 @@ extension TestResource.CompressedFile.Algorithm where Self == TestResource.Compr
         TestResource.CompressedFile.DeflateCompressionAlgorithm()
     }
 }
+
+#endif

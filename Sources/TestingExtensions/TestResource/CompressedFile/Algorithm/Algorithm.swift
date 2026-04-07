@@ -4,6 +4,8 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if canImport(Testing)
+
 #if canImport(Darwin)
 import struct Foundation.Data
 #else
@@ -24,3 +26,5 @@ extension TestResource.CompressedFile {
         func decompress(data: Data) throws -> Data
     }
 }
+
+#endif

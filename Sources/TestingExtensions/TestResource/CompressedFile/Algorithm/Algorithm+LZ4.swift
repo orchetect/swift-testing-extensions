@@ -4,10 +4,16 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if canImport(Testing)
+
 #if canImport(Darwin)
 import struct Foundation.Data
 #else
 import struct FoundationEssentials.Data
+
+#endif
+
+#if os(Linux)
 // import SWCompression
 // import SwiftDataParsing
 #endif
@@ -51,7 +57,7 @@ extension TestResource.CompressedFile.LZ4CompressionAlgorithm: TestResource.Comp
         #if canImport(Darwin)
         // use Apple-provided NSData compression
         try data.compressed(using: .lz4)
-        #else
+        #elseif os(Linux)
         // note that Apple's LZ4 (not LZ4 RAW) adds a block header (which has two variants) and a 4-byte footer.
         // SWCompression does not add them when compressing, nor does it expect them when decoding.
         // So we should add them after encoding using SWCompression.
@@ -62,6 +68,8 @@ extension TestResource.CompressedFile.LZ4CompressionAlgorithm: TestResource.Comp
         //     LZ4.compress(data: data)
         
         throw TestResourceError.notSupported
+        #else
+        throw TestResourceError.notSupported
         #endif
     }
 
@@ -69,7 +77,7 @@ extension TestResource.CompressedFile.LZ4CompressionAlgorithm: TestResource.Comp
         #if canImport(Darwin)
         // use Apple-provided NSData compression
         try data.decompressed(using: .lz4)
-        #else
+        #elseif os(Linux)
 //        // use 3rd-party SWCompression dependency provided method
 //        
 //        // note that Apple's LZ4 (not LZ4 RAW) adds a block header (which has two variants) and a 4-byte footer.
@@ -151,6 +159,8 @@ extension TestResource.CompressedFile.LZ4CompressionAlgorithm: TestResource.Comp
                 throw TestResourceError.invalidDataHeader
 //            }
 //        }
+        #else
+        throw TestResourceError.notSupported
         #endif
     }
 }
@@ -168,3 +178,5 @@ extension TestResource.CompressedFile.Algorithm where Self == TestResource.Compr
         TestResource.CompressedFile.LZ4CompressionAlgorithm()
     }
 }
+
+#endif

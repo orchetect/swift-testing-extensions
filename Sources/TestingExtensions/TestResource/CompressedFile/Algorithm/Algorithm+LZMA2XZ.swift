@@ -4,10 +4,15 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if canImport(Testing)
+
 #if canImport(Darwin)
 import struct Foundation.Data
 #else
 import struct FoundationEssentials.Data
+#endif
+
+#if os(Linux)
 import SWCompression
 #endif
 
@@ -36,8 +41,10 @@ extension TestResource.CompressedFile.LZMA2XZCompressionAlgorithm: TestResource.
         #if canImport(Darwin)
         // use Apple-provided NSData compression, which implements LZMA level 6
         try data.compressed(using: .lzma)
-        #else
+        #elseif os(Linux)
         // TODO: not yet supported by SWCompression
+        throw TestResourceError.notSupported
+        #else
         throw TestResourceError.notSupported
         #endif
     }
@@ -46,9 +53,11 @@ extension TestResource.CompressedFile.LZMA2XZCompressionAlgorithm: TestResource.
         #if canImport(Darwin)
         // use Apple-provided NSData compression, which implements LZMA level 6
         try data.decompressed(using: .lzma)
-        #else
+        #elseif os(Linux)
         // use 3rd-party SWCompression dependency provided method
         try XZArchive.unarchive(archive: data) // unarchives LZMA2 packed inside an XZ container
+        #else
+        throw TestResourceError.notSupported
         #endif
     }
 }
@@ -64,3 +73,5 @@ extension TestResource.CompressedFile.Algorithm where Self == TestResource.Compr
         TestResource.CompressedFile.LZMA2XZCompressionAlgorithm()
     }
 }
+
+#endif

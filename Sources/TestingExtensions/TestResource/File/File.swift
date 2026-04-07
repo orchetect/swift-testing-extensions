@@ -4,7 +4,7 @@
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Testing) && canImport(Foundation)
+#if canImport(Testing)
 
 #if canImport(Darwin)
 import class Foundation.Bundle

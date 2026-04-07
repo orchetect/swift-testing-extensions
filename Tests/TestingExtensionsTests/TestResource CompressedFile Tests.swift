@@ -1,8 +1,10 @@
 //
-//  TestResource Tests.swift
+//  TestResource CompressedFile Tests.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
+
+#if (canImport(Darwin) || os(Linux)) && canImport(Testing)
 
 #if canImport(Darwin)
 import class Foundation.Bundle
@@ -17,27 +19,7 @@ import class FoundationEssentials.FileManager
 import Testing
 @testable import TestingExtensions
 
-@Suite struct TestResource_Tests_foo {
-    @Test func resourceData() async throws {
-        let data = try TestResource.foo.data()
-        let string = try #require(String(data: data, encoding: .utf8))
-        #expect(string == "Foo file content")
-    }
-    
-    @available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) // URL path() requirement
-    @Test func resourceURL() async throws {
-        let url = try TestResource.foo.url()
-        #expect(FileManager.default.fileExists(atPath: url.path(percentEncoded: false)))
-    }
-}
-
-@Suite struct TestResource_Tests_bar {
-    @Test func resourceData() async throws {
-        let data = try TestResource.bar.data()
-        let string = try #require(String(data: data, encoding: .utf8))
-        #expect(string == "Bar file content")
-    }
-    
+@Suite struct TestResource_CompressedFile_Tests_bar {
     @Test func compressedResourceData_deflate() async throws {
         let data = try TestResource.bar(.deflate).data()
         let string = try #require(String(data: data, encoding: .utf8))
@@ -70,7 +52,7 @@ import Testing
     }
 }
 
-@Suite struct TestResource_baz {
+@Suite struct TestResource_CompressedFile_Tests_baz {
     /// Uncompressed Baz.bin file content:
     /// 240 bytes total, comprised of the 15-byte sequence `0x01...0x0F` repeated 16 times.
     private let expectedBytes: [UInt8] = (0 ..< 16)
@@ -82,11 +64,6 @@ import Testing
     init() {
         // sanity check
         #expect(expectedBytes.count == 240)
-    }
-    
-    @Test mutating func resourceData() async throws {
-        let data = try TestResource.baz.data()
-        #expect(data == expectedData)
     }
     
     @Test mutating func compressedResourceData_deflate() async throws {
@@ -116,3 +93,5 @@ import Testing
         #expect(data == expectedData)
     }
 }
+
+#endif
