@@ -18,12 +18,13 @@ import struct FoundationEssentials.Data
 // import SwiftDataParsing
 #endif
 
+
 extension TestResource.CompressedFile {
     /// The LZ4 compression algorithm, recommended for fast compression.
     ///
     /// Use this algorithm if speed is critical, and you’re willing to sacrifice compression ratio to achieve it.
     #if !canImport(Darwin)
-    @available(*, unavailable, message: "Not yet available on this platform.")
+    @available(*, deprecated, message: "Not yet available on this platform.")
     #endif
     public struct LZ4CompressionAlgorithm {
         public init() { }
@@ -31,22 +32,22 @@ extension TestResource.CompressedFile {
 }
 
 #if !canImport(Darwin)
-@available(*, unavailable, message: "Not yet available on this platform.")
+@available(*, deprecated, message: "Not yet available on this platform.")
 #endif
 extension TestResource.CompressedFile.LZ4CompressionAlgorithm: Equatable { }
 
 #if !canImport(Darwin)
-@available(*, unavailable, message: "Not yet available on this platform.")
+@available(*, deprecated, message: "Not yet available on this platform.")
 #endif
 extension TestResource.CompressedFile.LZ4CompressionAlgorithm: Hashable { }
 
 #if !canImport(Darwin)
-@available(*, unavailable, message: "Not yet available on this platform.")
+@available(*, deprecated, message: "Not yet available on this platform.")
 #endif
 extension TestResource.CompressedFile.LZ4CompressionAlgorithm: Sendable { }
 
 #if !canImport(Darwin)
-@available(*, unavailable, message: "Not yet available on this platform.")
+@available(*, deprecated, message: "Not yet available on this platform.")
 #endif
 extension TestResource.CompressedFile.LZ4CompressionAlgorithm: TestResource.CompressedFile.Algorithm {
     public var fileExtension: String {
@@ -168,7 +169,7 @@ extension TestResource.CompressedFile.LZ4CompressionAlgorithm: TestResource.Comp
 // MARK: - Static Constructors
 
 #if !canImport(Darwin)
-@available(*, unavailable, message: "Not yet available on this platform.")
+@available(*, deprecated, message: "Not yet available on this platform.")
 #endif
 extension TestResource.CompressedFile.Algorithm where Self == TestResource.CompressedFile.LZ4CompressionAlgorithm {
     /// The LZ4 compression algorithm, recommended for fast compression.

@@ -37,6 +37,9 @@ extension TestResource.CompressedFile.LZMA2XZCompressionAlgorithm: TestResource.
         "xz"
     }
 
+    #if !canImport(Darwin)
+    @available(*, deprecated, message: "Not yet available on this platform.")
+    #endif
     public func compress(data: Data) throws -> Data {
         #if canImport(Darwin)
         // use Apple-provided NSData compression, which implements LZMA level 6
