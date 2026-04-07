@@ -4,6 +4,19 @@
 
 Useful Swift Testing extensions for test targets.
 
+## Compatibility
+
+| Feature                                  | Apple | Linux           | WASM | Android | Windows |
+| ---------------------------------------- | ----- | --------------- | ---- | ------- | ------- |
+| `#fail`                                  | ✅     | ✅               | ❔    | ✅       | ❔       |
+| `wait(expect:)` / `wait(require:)`       | ✅     | ✅               | ❔    | ✅       | ❔       |
+| Test Traits                              | ✅     | ✅               | ❔    | ✅       | ❔       |
+| `TestResource.File`                      | ✅     | ✅               | ❔    | ✅       | ❔       |
+| `TestResource.CompressedFile` deflate    | ✅     | ✅               | ❔    | ❌       | ❔       |
+| `TestResource.CompressedFile` lz4        | ✅     | ❌               | ❔    | ❌       | ❌       |
+| `TestResource.CompressedFile` lzfse      | ✅     | ❌               | ❔    | ❌       | ❌       |
+| `TestResource.CompressedFile` lzma2 (XZ) | ✅     | Decompress only | ❔    | ❌       | ❔       |
+
 ## Overview
 
 Currently, the library provides a small but useful set of [Swift Testing](https://github.com/swiftlang/swift-testing) related extensions.
