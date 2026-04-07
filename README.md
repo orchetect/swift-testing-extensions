@@ -8,14 +8,16 @@ Useful Swift Testing extensions for test targets.
 
 | Feature                                  | Apple | Linux           | WASM | Android | Windows |
 | ---------------------------------------- | ----- | --------------- | ---- | ------- | ------- |
-| `#fail`                                  | ✅     | ✅               | ❔    | ✅       | ❔       |
-| `wait(expect:)` / `wait(require:)`       | ✅     | ✅               | ❔    | ✅       | ❔       |
-| Test Traits                              | ✅     | ✅               | ❔    | ✅       | ❔       |
-| `TestResource.File`                      | ✅     | ✅               | ❔    | ✅       | ❔       |
+| `#fail`                                  | ✅     | ✅               | ❔    | ✅*      | ❔       |
+| `wait(expect:)` / `wait(require:)`       | ✅     | ✅               | ❔    | ✅*      | ❔       |
+| Test Traits                              | ✅     | ✅               | ❔    | ✅*      | ❔       |
+| `TestResource.File`                      | ✅     | ✅               | ❔    | ✅*      | ❔       |
 | `TestResource.CompressedFile` deflate    | ✅     | ✅               | ❔    | ❌       | ❔       |
 | `TestResource.CompressedFile` lz4        | ✅     | ❌               | ❔    | ❌       | ❌       |
 | `TestResource.CompressedFile` lzfse      | ✅     | ❌               | ❔    | ❌       | ❌       |
 | `TestResource.CompressedFile` lzma2 (XZ) | ✅     | Decompress only | ❔    | ❌       | ❔       |
+
+`*` [Swift Testing support for the Android SDK](https://github.com/swiftlang/swift-testing/issues/1366) in forthcoming.
 
 ## Overview
 
