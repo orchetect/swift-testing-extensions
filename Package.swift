@@ -47,7 +47,7 @@ package.dependencies.append(
     .package(url: "https://github.com/tsolomko/SWCompression", from: "4.8.6")
 )
 package.targets.first(where: { $0.name == "TestingExtensions" })?.dependencies.append(
-    "SWCompression"
+    .product(name: "SWCompression", package: "SWCompression", condition: .when(platforms: [.linux]))
 )
 
 // Data parsing dependency (for experimental LZ4 support on non-Apple platforms)
@@ -55,6 +55,6 @@ package.targets.first(where: { $0.name == "TestingExtensions" })?.dependencies.a
 //     .package(url: "https://github.com/orchetect/swift-data-parsing", from: "0.1.0")
 // )
 // package.targets.first(where: { $0.name == "TestingExtensions" })?.dependencies.append(
-//     .product(name: "SwiftDataParsing", package: "swift-data-parsing")
+//     .product(name: "SwiftDataParsing", package: "swift-data-parsing", condition: .when(platforms: [.linux]))
 // )
 #endif
