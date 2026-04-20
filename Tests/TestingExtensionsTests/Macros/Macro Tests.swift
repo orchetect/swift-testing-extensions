@@ -1,7 +1,7 @@
 //
 //  Macro Tests.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS) && canImport(TestingExtensionsMacros)
@@ -10,16 +10,16 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
-
 import Testing
 @testable import TestingExtensions
 
-@Test func failMacro() async throws {
+@Test
+func failMacro() async throws {
     withKnownIssue {
         // #fail // this does not compile in Xcode 26 beta
         #fail() // this is required in Xcode 26 beta, unless it's a bug and gets resolved later?
     }
-    
+
     withKnownIssue {
         #fail("Failure reason.")
     }
@@ -29,8 +29,8 @@ import Testing
 
 #if canImport(XCTest)
 
-import XCTest
 @testable import TestingExtensionsMacros
+import XCTest
 
 /// > Note:
 /// > - At the time this code was written, `assertMacroExpansion` only asserts
@@ -42,88 +42,88 @@ final class AssertTests: XCTestCase {
         "fail": FailMacro.self,
         "alternativeFail": AlternativeFailMacro.self
     ]
-    
+
     func testFailMacroExpansion() {
         assertMacroExpansion(
             """
             #fail
             """,
             expandedSource: """
-            _ = Issue.record()
-            """,
+                _ = Issue.record()
+                """,
             macros: testMacros
         )
-        
+
         assertMacroExpansion(
             """
             #fail("Failure reason.")
             """,
             expandedSource: """
-            _ = Issue.record("Failure reason.")
-            """,
+                _ = Issue.record("Failure reason.")
+                """,
             macros: testMacros
         )
-        
+
         assertMacroExpansion(
             """
             #fail("Failure reason.", sourceLocation: SourceLocation(fileID: "id", filePath: "path", line: 20, column: 4))
             """,
             expandedSource: """
-            _ = Issue.record("Failure reason.", sourceLocation: SourceLocation(fileID: "id", filePath: "path", line: 20, column: 4))
-            """,
+                _ = Issue.record("Failure reason.", sourceLocation: SourceLocation(fileID: "id", filePath: "path", line: 20, column: 4))
+                """,
             macros: testMacros
         )
-        
+
         assertMacroExpansion(
             """
             #fail(sourceLocation: SourceLocation())
             """,
             expandedSource: """
-            _ = Issue.record(sourceLocation: SourceLocation())
-            """,
+                _ = Issue.record(sourceLocation: SourceLocation())
+                """,
             macros: testMacros
         )
     }
 
     func testAlternativeFailMacroExpansion() {
         assertMacroExpansion(
-             """
+            """
              #alternativeFail
              """,
-             expandedSource: """
-             #expect(Bool(false))
-             """,
-             macros: testMacros
+            expandedSource: """
+                #expect(Bool(false))
+                """,
+            macros: testMacros
         )
-        
+
         assertMacroExpansion(
-             """
+            """
              #alternativeFail("Failure reason.")
              """,
-             expandedSource: """
-             #expect(Bool(false), "Failure reason.")
-             """,
-             macros: testMacros
+            expandedSource: """
+                #expect(Bool(false), "Failure reason.")
+                """,
+            macros: testMacros
         )
-        
+
         assertMacroExpansion(
-             """
+            """
              #alternativeFail("Failure reason.", sourceLocation: SourceLocation(fileID: "id", filePath: "path", line: 20, column: 4))
              """,
-             expandedSource: """
-             #expect(Bool(false), "Failure reason.", sourceLocation: SourceLocation(fileID: "id", filePath: "path", line: 20, column: 4))
-             """,
-             macros: testMacros
+            expandedSource: """
+                #expect(Bool(false), "Failure reason.", sourceLocation: SourceLocation(fileID: "id", filePath: "path", line: 20, column: 4))
+                """,
+            macros: testMacros
         )
-        
+
         assertMacroExpansion(
-             """
+            """
              #alternativeFail(sourceLocation: SourceLocation())
              """,
-             expandedSource: """
-             #expect(Bool(false), sourceLocation: SourceLocation())
-             """,
-             macros: testMacros
+            expandedSource: """
+                #expect(Bool(false), sourceLocation: SourceLocation())
+                """,
+            macros: testMacros
         )
     }
 }

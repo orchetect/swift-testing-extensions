@@ -1,7 +1,7 @@
 //
 //  Algorithm.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing)
@@ -18,10 +18,10 @@ extension TestResource.CompressedFile {
     public protocol Algorithm: Equatable, Hashable, Sendable {
         /// Returns the suggested file extension for use with the compression algorithm.
         var fileExtension: String { get }
-        
+
         /// Compresses data using the algorithm.
         func compress(data: Data) throws -> Data
-        
+
         /// Decompresses data using the algorithm.
         func decompress(data: Data) throws -> Data
     }

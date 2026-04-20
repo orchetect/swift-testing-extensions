@@ -1,7 +1,7 @@
 //
 //  TestResource Dev Tests.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -15,7 +15,7 @@ import Testing
 /// This test is not part of automated CI testing.
 /// This is just a manually-invoked utility to compress or decompress files ad-hoc.
 @Test(.enabledIfShiftOnlyIsDown)
-func manualCompressionUtility() async throws {
+func manualCompressionUtility() {
 //    try TestResource.baz(.lz4).manuallyCompressFile(locatedIn: .desktopDirectory)
 //    try TestResource.baz(.lz4).manuallyDecompress(intoFolder: .desktopDirectory)
 }

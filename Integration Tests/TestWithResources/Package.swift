@@ -11,7 +11,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(name: "swift-testing-extensions", path: "../../"),
+        .package(name: "swift-testing-extensions", path: "../../")
     ],
     targets: [
         .target(
@@ -21,7 +21,7 @@ let package = Package(
             name: "TestWithResourcesTests",
             dependencies: [
                 "TestWithResources",
-                .product(name: "TestingExtensions", package: "swift-testing-extensions"),
+                .product(name: "TestingExtensions", package: "swift-testing-extensions")
             ],
             resources: [.copy("TestResource/Text Files")]
         )

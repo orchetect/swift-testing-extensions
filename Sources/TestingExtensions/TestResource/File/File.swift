@@ -1,7 +1,7 @@
 //
 //  File.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing)
@@ -22,7 +22,7 @@ extension TestResource {
         public let name: String
         public let ext: String?
         public let subFolder: String?
-        
+
         public init(
             name: String,
             ext: String? = nil,
@@ -32,7 +32,7 @@ extension TestResource {
             self.ext = ext
             self.subFolder = subFolder
         }
-        
+
         /// Returns the contents of the test resource file or `nil` if the file could not be located.
         /// This method also returns `nil` if the bundle does not exist is not a readable directory.
         @inline(__always)
@@ -44,7 +44,6 @@ extension TestResource {
         }
     }
 }
-
 
 // MARK: - Public Members
 

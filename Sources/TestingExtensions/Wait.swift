@@ -1,7 +1,7 @@
 //
 //  Wait.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing)
@@ -26,14 +26,14 @@ public func wait(
 ) async rethrows {
     let timeout = max(timeout, 0.001) // sanitize: clamp
     let pollingInterval = max(pollingInterval, 0.001) // sanitize: clamp
-    
+
     let startTime = Date()
-    
+
     while Date().timeIntervalSince(startTime) < timeout {
         if try await condition() { return }
         try? await Task.sleep(seconds: pollingInterval)
     }
-    
+
     #expect(try await condition(), comment, sourceLocation: sourceLocation)
 }
 
@@ -47,14 +47,14 @@ public func wait(
 ) async throws {
     let timeout = max(timeout, 0.001) // sanitize: clamp
     let pollingInterval = max(pollingInterval, 0.001) // sanitize: clamp
-    
+
     let startTime = Date()
-    
+
     while Date().timeIntervalSince(startTime) < timeout {
         if try await condition() { return }
         try await Task.sleep(seconds: pollingInterval)
     }
-    
+
     try #require(await condition(), comment, sourceLocation: sourceLocation)
 }
 

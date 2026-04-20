@@ -1,7 +1,7 @@
 //
 //  Data+NSData.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Darwin)
@@ -19,7 +19,7 @@ extension Data {
         try (self as NSData)
             .compressed(using: algorithm) as Data
     }
-    
+
     /// Convenience to decompress Data using built-in `NSData` compression algorithms on Apple platforms.
     @_disfavoredOverload
     func decompressed(

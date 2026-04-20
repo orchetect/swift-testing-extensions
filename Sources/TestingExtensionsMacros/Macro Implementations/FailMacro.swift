@@ -1,7 +1,7 @@
 //
 //  FailMacro.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing)
@@ -35,15 +35,16 @@ import Testing
 /// ```
 public struct FailMacro: ExpressionMacro {
     // MARK: - Implementation
+
     // Cleaner implementation that is reported as a recorded issue instead of an expectation:
     // Issue.record(comment(), sourceLocation: sourceLocation)
-    
+
     public static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) -> ExprSyntax {
         var outputArguments: [String] = []
-        
+
         // first #fail argument is `_ comment:` and has no label
         // so it seems the only criteria we can use to identify it
         // is the fact that it's the first argument and it lacks a label.
@@ -56,16 +57,17 @@ public struct FailMacro: ExpressionMacro {
             let comment = commentArg.expression
             outputArguments.append("\(comment)")
         }
-        
-        if let sourceLocation = node.arguments.first(labeled: "sourceLocation")?
+
+        if let sourceLocation = node.arguments
+            .first(labeled: "sourceLocation")?
             .expression
         {
             outputArguments.append("sourceLocation: \(sourceLocation)")
         }
-        
+
         // method is @discardableResult but we have to explicitly discard the value
         let output = "_ = Issue.record(" + outputArguments.joined(separator: ", ") + ")"
-        
+
         return ExprSyntax(stringLiteral: output)
     }
 }
@@ -74,15 +76,16 @@ public struct FailMacro: ExpressionMacro {
 /// This works but we will vend the other fail macro implementation instead.
 struct AlternativeFailMacro: ExpressionMacro {
     // MARK: - Alternative Implementation
+
     // Cumbersome implementation that simulates a failed expectation:
     // #expect(Bool(false), comment(), sourceLocation: sourceLocation)
-    
-    public static func expansion(
+
+    static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) -> ExprSyntax {
         var outputArguments: [String] = []
-        
+
         // Note:
         // - invoking `#expect` is a shortcut and not ideal, but it gets the job done.
         // - if it's possible to implement in a more idiomatic way, akin to how Swift Testing
@@ -90,7 +93,7 @@ struct AlternativeFailMacro: ExpressionMacro {
         //   the same syntax.
         // - using `Bool()` silences the compiler warning that the expression always fails.
         outputArguments.append("Bool(false)")
-        
+
         // first #fail argument is `_ comment:` and has no label
         // so it seems the only criteria we can use to identify it
         // is the fact that it's the first argument and it lacks a label.
@@ -103,15 +106,16 @@ struct AlternativeFailMacro: ExpressionMacro {
             let comment = commentArg.expression
             outputArguments.append("\(comment)")
         }
-        
-        if let sourceLocation = node.arguments.first(labeled: "sourceLocation")?
+
+        if let sourceLocation = node.arguments
+            .first(labeled: "sourceLocation")?
             .expression
         {
             outputArguments.append("sourceLocation: \(sourceLocation)")
         }
-        
+
         let output = "#expect(" + outputArguments.joined(separator: ", ") + ")"
-        
+
         return ExprSyntax(stringLiteral: output)
     }
 }

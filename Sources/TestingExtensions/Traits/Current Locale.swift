@@ -1,7 +1,7 @@
 //
 //  Current Locale.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing)
@@ -21,7 +21,7 @@ public func isCurrentLocale(_ locale: Locale) -> Bool {
 
 extension Trait where Self == Testing.ConditionTrait {
     // MARK: - Locale
-    
+
     /// Test is enabled if the current locale matches the given locale.
     ///
     /// Test case usage:
@@ -35,7 +35,7 @@ extension Trait where Self == Testing.ConditionTrait {
     public static func enabled(ifLocale locale: Locale) -> ConditionTrait {
         .enabled(if: isCurrentLocale(locale))
     }
-    
+
     /// Test is enabled if the current locale matches one of the given locales.
     ///
     /// Test case usage:
@@ -51,7 +51,7 @@ extension Trait where Self == Testing.ConditionTrait {
     }
 
     // MARK: - Locale Identifier
-    
+
     /// Test is enabled if the current locale identifier matches the the given identifiers.
     ///
     /// Test case usage:
@@ -69,7 +69,7 @@ extension Trait where Self == Testing.ConditionTrait {
     public static func enabled(ifLocaleIdentifier identifier: String) -> ConditionTrait {
         .enabled(if: Locale.current == Locale(identifier: identifier))
     }
-    
+
     /// Test is enabled if the current locale identifier matches one of the the given identifiers.
     ///
     /// Test case usage:
@@ -89,7 +89,7 @@ extension Trait where Self == Testing.ConditionTrait {
     }
 
     // MARK: - Locale Identifier Prefix
-    
+
     /// Test is enabled if the current locale identifier contains the given prefix.
     ///
     /// Test case usage:
@@ -135,9 +135,9 @@ extension Trait where Self == Testing.ConditionTrait {
             })
         )
     }
-    
+
     // MARK: - Region
-    
+
     /// Test is enabled if the current locale region matches the given region.
     ///
     /// Test case usage:
@@ -152,7 +152,7 @@ extension Trait where Self == Testing.ConditionTrait {
     public static func enabled(ifLocaleRegion region: Locale.Region) -> ConditionTrait {
         .enabled(if: Locale.current.region == region)
     }
-    
+
     /// Test is enabled if the current locale region matches one of the given regions.
     ///
     /// Test case usage:
@@ -174,7 +174,7 @@ extension Trait where Self == Testing.ConditionTrait {
     }
 
     // MARK: - Language
-    
+
     /// Test is enabled if the current locale language matches the given language.
     ///
     /// Test case usage:
@@ -189,7 +189,7 @@ extension Trait where Self == Testing.ConditionTrait {
     public static func enabled(ifLocaleLanguage language: Locale.Language) -> ConditionTrait {
         .enabled(if: Locale.current.language == language)
     }
-    
+
     /// Test is enabled if the current locale language matches one of the given languages.
     ///
     /// Test case usage:
@@ -204,9 +204,9 @@ extension Trait where Self == Testing.ConditionTrait {
     public static func enabled(ifLocaleLanguage languages: [Locale.Language]) -> ConditionTrait {
         .enabled(if: languages.contains(Locale.current.language))
     }
-    
+
     // MARK: - Language Code
-    
+
     /// Test is enabled if the current locale language code matches the given language code.
     ///
     /// Test case usage:
@@ -221,7 +221,7 @@ extension Trait where Self == Testing.ConditionTrait {
     public static func enabled(ifLocaleLanguageCode languageCode: Locale.LanguageCode) -> ConditionTrait {
         .enabled(if: Locale.current.language.languageCode == languageCode)
     }
-    
+
     /// Test is enabled if the current locale language code matches one of the given language codes.
     ///
     /// Test case usage:

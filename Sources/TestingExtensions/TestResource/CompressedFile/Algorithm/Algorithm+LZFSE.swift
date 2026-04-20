@@ -1,7 +1,7 @@
 //
 //  Algorithm+LZFSE.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing)
@@ -15,7 +15,6 @@ import struct FoundationEssentials.Data
 #if os(Linux)
 import SWCompression
 #endif
-
 
 extension TestResource.CompressedFile {
     /// The LZFSE compression algorithm, recommended for use on Apple platforms.

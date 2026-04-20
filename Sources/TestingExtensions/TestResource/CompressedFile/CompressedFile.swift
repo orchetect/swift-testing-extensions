@@ -1,7 +1,7 @@
 //
 //  CompressedFile.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing)
@@ -20,16 +20,18 @@ extension TestResource {
     /// Metadata describing a compressed test resource file that exists in the test target.
     public struct CompressedFile: FileProtocol {
         public let name: String
-        
+
         private let _ext: String?
-        
+
         @inline(__always)
-        public var ext: String? { ext(compressedForm: true) }
-        
+        public var ext: String? {
+            ext(compressedForm: true)
+        }
+
         public let subFolder: String?
-        
+
         public let compressionAlgorithm: any Algorithm
-        
+
         public init(
             name: String,
             ext: String? = nil,
@@ -37,9 +39,9 @@ extension TestResource {
             compression: any Algorithm
         ) {
             self.name = name
-            self._ext = ext
+            _ext = ext
             self.subFolder = subFolder
-            self.compressionAlgorithm = compression
+            compressionAlgorithm = compression
         }
     }
 }
@@ -63,7 +65,7 @@ extension TestResource.CompressedFile {
         let output = components.joined(separator: ".")
         return output
     }
-    
+
     /// Returns the contents of the test resource file or `nil` if the file could not be located.
     /// This method also returns `nil` if the bundle does not exist is not a readable directory.
     @inline(__always)
@@ -75,7 +77,7 @@ extension TestResource.CompressedFile {
         let decompressedData = try compressionAlgorithm.decompress(data: compressedData)
         return decompressedData
     }
-    
+
     /// Returns the full filename including extension, if any, omitting the trailing compression extension.
     @inline(__always)
     public var fileNameWithoutCompressionSuffix: String {

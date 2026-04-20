@@ -1,7 +1,7 @@
 //
 //  System Timing Stable.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing)
@@ -10,12 +10,13 @@ import Testing
 
 #if canImport(Darwin)
 import struct Foundation.Date
+import class Foundation.Thread
 import typealias Foundation.TimeInterval
 import var Foundation.USEC_PER_SEC // also in CoreFoundation
-import class Foundation.Thread
 #else
 import struct FoundationEssentials.Date
 import typealias FoundationEssentials.TimeInterval
+
 private let USEC_PER_SEC: UInt64 = 1_000_000
 import class Foundation.Thread
 #endif
@@ -37,7 +38,7 @@ public func isSystemTimingStable(
     Thread.sleep(forTimeInterval: duration)
     let end = Date()
     let diff = end.timeIntervalSince(start)
-    
+
     let range = (duration - tolerance) ... (duration + tolerance)
     return range.contains(diff)
 }

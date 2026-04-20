@@ -1,7 +1,7 @@
 //
 //  Task Extensions.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Darwin)
@@ -11,6 +11,7 @@ import typealias Foundation.TimeInterval
 #else
 import struct FoundationEssentials.Date
 import typealias FoundationEssentials.TimeInterval
+
 private let NSEC_PER_SEC: UInt64 = 1_000_000_000
 #endif
 

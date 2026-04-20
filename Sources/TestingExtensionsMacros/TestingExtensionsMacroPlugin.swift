@@ -1,7 +1,7 @@
 //
 //  TestingExtensionsMacroPlugin.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing) && canImport(SwiftCompilerPlugin)
@@ -14,7 +14,7 @@ struct TestingExtensionsMacroPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
         // Generic
         ModuleBundleMacro.self,
-        
+
         // Swift Testing Extensions
         FailMacro.self
     ]

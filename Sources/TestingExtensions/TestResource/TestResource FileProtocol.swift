@@ -1,7 +1,7 @@
 //
 //  TestResource FileProtocol.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing) && canImport(Foundation)
@@ -35,7 +35,7 @@ extension TestResource.FileProtocol {
         if let ext { fn += ".\(ext)" }
         return fn
     }
-    
+
     /// Returns the file URL for the resource file or `nil` if the file could not be located.
     /// This method also returns `nil` if the bundle does not exist is not a readable directory.
     @inline(__always)
@@ -46,15 +46,15 @@ extension TestResource.FileProtocol {
         // Note: Bundle.module is synthesized when the package target has `resources: [...]`
         try #require(
             bundle.url(
-                forResource: self.name,
-                withExtension: self.ext,
-                subdirectory: self.subFolder
+                forResource: name,
+                withExtension: ext,
+                subdirectory: subFolder
             ),
             "Test resource file not found or is not accessible.",
             sourceLocation: sourceLocation
         )
     }
-    
+
     /// Returns the contents of the test resource file or `nil` if the file could not be located.
     /// This method also returns `nil` if the bundle does not exist is not a readable directory.
     @inline(__always)

@@ -1,7 +1,7 @@
 //
 //  Algorithm+DEFLATE.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing)
@@ -37,7 +37,7 @@ extension TestResource.CompressedFile.DeflateCompressionAlgorithm: TestResource.
     public var fileExtension: String {
         "deflate"
     }
-    
+
     public func compress(data: Data) throws -> Data {
         #if canImport(Darwin)
         // Apple's NSData-provided zlib algorithm is actually just raw DEFLATE, which is used by zlib archives
@@ -49,7 +49,7 @@ extension TestResource.CompressedFile.DeflateCompressionAlgorithm: TestResource.
         throw TestResourceError.notSupported
         #endif
     }
-    
+
     public func decompress(data: Data) throws -> Data {
         #if canImport(Darwin)
         // Apple's NSData-provided zlib algorithm is actually just raw DEFLATE, which is used by zlib archives

@@ -1,7 +1,7 @@
 //
 //  CompressedFile+Utilities.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if canImport(Testing)
@@ -58,7 +58,7 @@ extension TestResource.CompressedFile {
         }
         try compressed.write(to: outURL)
     }
-    
+
     /// Utility to decompress a compressed test target resource file (non-archive).
     ///
     /// > Tip:

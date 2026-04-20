@@ -1,7 +1,7 @@
 //
 //  TestResource.swift
 //  swift-testing-extensions • https://github.com/orchetect/swift-testing-extensions
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 /// Namespace for resources files on disk used for unit testing.
