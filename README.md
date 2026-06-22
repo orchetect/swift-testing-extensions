@@ -1,4 +1,4 @@
-# swift-testing-extensions
+# Swift Testing Extensions
 
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2Fswift-testing-extensions%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/orchetect/swift-testing-extensions) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2Fswift-testing-extensions%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/swift-testing-extensions) [![License: MIT](http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/swift-testing-extensions/blob/main/LICENSE)
 
@@ -229,6 +229,7 @@ try TestResource.foo.manuallyDecompress(intoFolder: folder)
 ```
 
 > [!IMPORTANT]
+>
 > Note that this method is not meant to be run as part of automated unit testing, but is provided as a utility when the file requires editing in order to be recompressed again and replaced in the package at a later time. For use in automated testing, call the `data()` method instead to return the uncompressed raw file content.
 
 #### Implementing Custom Compression Algorithms
@@ -301,7 +302,7 @@ Coded by a bunch of 🐹 hamsters in a trenchcoat that calls itself [@orchetect]
 
 ## License
 
-Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/swift-testing-extensions/blob/master/LICENSE) for details.
+Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/swift-testing-extensions/blob/main/LICENSE) for details.
 
 This package has no affiliation with the [Swift Testing](https://github.com/swiftlang/swift-testing) project but is offered as-is for use in conjunction with it.
 
