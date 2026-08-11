@@ -8,7 +8,7 @@
 
 import Testing
 
-#if canImport(Darwin)
+#if canImport(Darwin) && canImport(Foundation)
 import struct Foundation.Date
 import class Foundation.Thread
 import typealias Foundation.TimeInterval
@@ -16,9 +16,8 @@ import var Foundation.USEC_PER_SEC // also in CoreFoundation
 #else
 import struct FoundationEssentials.Date
 import typealias FoundationEssentials.TimeInterval
-
 private let USEC_PER_SEC: UInt64 = 1_000_000
-import class Foundation.Thread
+import func Foundation.usleep
 #endif
 
 /// Returns `true` if system conditions are suitable for executing tests that rely on precise system timing.
@@ -35,7 +34,16 @@ public func isSystemTimingStable(
     tolerance: TimeInterval = 0.01
 ) -> Bool {
     let start = Date()
+
+    #if canImport(Darwin) && canImport(Foundation)
     Thread.sleep(forTimeInterval: duration)
+    #elseif os(WASI)
+    usleep(UInt32(TimeInterval(USEC_PER_SEC) * duration))
+    #else
+    // Linux and Android use UInt64 usleep value
+    usleep(UInt64(TimeInterval(USEC_PER_SEC) * duration))
+    #endif
+
     let end = Date()
     let diff = end.timeIntervalSince(start)
 
