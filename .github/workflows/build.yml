@@ -32,7 +32,7 @@ jobs:
   macOS:
     name: Tests (macOS)
     runs-on: macos-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
     - uses: actions/checkout@main
     - uses: maxim-lobanov/setup-xcode@v1
@@ -60,7 +60,7 @@ jobs:
   macCatalyst:
     name: Tests (macCatalyst)
     runs-on: macos-15
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
     - uses: actions/checkout@main
     - uses: maxim-lobanov/setup-xcode@v1
@@ -100,7 +100,7 @@ jobs:
       fail-fast: false
       matrix:
         target: [iOS, tvOS, watchOS, visionOS]
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
     - uses: actions/checkout@main
     - uses: maxim-lobanov/setup-xcode@v1
@@ -155,7 +155,7 @@ jobs:
       fail-fast: false
       matrix:
         package: [TestWithoutResources, TestWithResources]
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
     - uses: actions/checkout@main
     - uses: maxim-lobanov/setup-xcode@v1
@@ -189,7 +189,7 @@ jobs:
   linux:
     name: Tests (Linux)
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
     - uses: actions/checkout@main
     # As a workaround for flakey pre-builds included in SwiftSyntax, we have to disable them when testing any platform that isn't macOS
@@ -204,7 +204,7 @@ jobs:
   android:
     name: Build (Android)
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     env:
       TARGET_TRIPLE: aarch64-unknown-linux-android28
     steps:
@@ -216,3 +216,43 @@ jobs:
     # See: https://github.com/swiftlang/swift-syntax/issues/2421#issuecomment-3542406416
     - name: Build
       run: swift build --swift-sdk "$TARGET_TRIPLE" --static-swift-stdlib --disable-experimental-prebuilts
+
+  wasm-on-linux:
+    name: Build (WASM on Linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TARGET_TRIPLE: wasm32-unknown-wasip1
+    steps:
+    - uses: actions/checkout@main
+    - name: Prepare SDK
+      uses: orchetect/setup-swift-wasm-sdk@v1
+      id: sdk-setup
+      with:
+        target-triple: ${{ env.TARGET_TRIPLE }}
+    - name: Build
+      run: swift build --swift-sdk "$SDK_ID" --triple "$TARGET_TRIPLE"
+      env:
+        SDK_ID: ${{ steps.sdk-setup.outputs.id }}
+
+  wasm-on-macos:
+    name: Build (WASM on macOS)
+    runs-on: macos-latest
+    timeout-minutes: 30
+    env:
+      TARGET_TRIPLE: wasm32-unknown-wasip1
+    steps:
+    - uses: actions/checkout@main
+    # Note: The Swift toolchain that ships with Xcode (which is the default Swift toolchain on macOS GitHub runners)
+    # has a bug that causes the build to crash. The workaround is to use a standalone Swift toolchain.
+    - name: Install swiftly and latest Swift toolchain
+      uses: swift-actions/setup-swift@v3
+    - name: Prepare SDK
+      uses: orchetect/setup-swift-wasm-sdk@v1
+      id: sdk-setup
+      with:
+        target-triple: ${{ env.TARGET_TRIPLE }}
+    - name: Build
+      run: swift build --swift-sdk "$SDK_ID" --triple "$TARGET_TRIPLE"
+      env:
+        SDK_ID: ${{ steps.sdk-setup.outputs.id }}
