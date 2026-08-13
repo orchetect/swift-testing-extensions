@@ -22,7 +22,7 @@ struct WaitTests {
 
         let foo = Foo()
 
-        Task {
+        _ = Task {
             try await Task.sleep(seconds: 0.5)
             await foo.update(value: 1)
         }
@@ -49,7 +49,7 @@ struct WaitTests {
 
         let foo = Foo()
 
-        Task {
+        _ = Task {
             try await Task.sleep(seconds: 0.5)
             await foo.update(value: 1)
         }
@@ -72,7 +72,7 @@ struct WaitTests {
 
         let foo = Foo()
 
-        Task {
+        _ = Task {
             try await Task.sleep(seconds: 0.5)
             await foo.update(value: 1)
         }
@@ -99,7 +99,7 @@ struct WaitTests {
 
         let foo = Foo()
 
-        Task {
+        _ = Task {
             try await Task.sleep(seconds: 0.5)
             await foo.update(value: 1)
         }
@@ -122,7 +122,7 @@ struct WaitTests {
 
         let foo = Foo()
 
-        Task {
+        _ = Task {
             try await Task.sleep(seconds: isStable ? 1.0 : 5.0)
             await foo.update(value: 1)
         }
@@ -147,7 +147,7 @@ struct WaitTests {
 
         let foo = Foo()
 
-        Task {
+        _ = Task {
             try await Task.sleep(seconds: isStable ? 1.0 : 5.0)
             await foo.update(value: 1)
         }
